@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - MMusic</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1><i class="fas fa-music"></i> MMusic</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина</a></li>
+                <li><a href="#" onclick="auth.logout()">Выйти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard">
+        <h2 class="section-title">Добро пожаловать, <span id="user-name"></span>!</h2>
+        
+        <section>
+            <h3 class="section-title">Мои заказы</h3>
+            <div class="orders-list" id="user-orders">
+                <!-- Заказы будут загружены через JS -->
+            </div>
+        </section>
+
+        <section>
+            <h3 class="section-title">Личная информация</h3>
+            <div id="user-info" style="background: white; padding: 2rem; border-radius: 8px;">
+                <!-- Информация о пользователе -->
+            </div>
+        </section>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!auth.currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('user-name').textContent = auth.currentUser.name;
+            
+            // Показываем информацию пользователя
+            document.getElementById('user-info').innerHTML = `
+                <p><strong>ФИО:</strong> ${auth.currentUser.name}</p>
+                <p><strong>Email:</strong> ${auth.currentUser.email}</p>
+                <p><strong>Телефон:</strong> ${auth.currentUser.phone}</p>
+                <p><strong>Дата регистрации:</strong> ${new Date(auth.currentUser.registrationDate).toLocaleDateString()}</p>
+            `;
+
+            loadUserOrders();
+        });
+
+        function loadUserOrders() {
+            const user = auth.currentUser;
+            const ordersContainer = document.getElementById('user-orders');
+            
+            if (!user.orders || user.orders.length === 0) {
+                ordersContainer.innerHTML = '<p>У вас пока нет заказов</p>';
+                return;
+            }
+
+            ordersContainer.innerHTML = user.orders.map(order => `
+                <div class="order-card">
+                    <h4>Заказ #${order.id}</h4>
+                    <p><strong>Дата:</strong> ${new Date(order.date).toLocaleDateString()}</p>
+                    <p><strong>Статус:</strong> <span style="color: ${getStatusColor(order.status)}">${getStatusText(order.status)}</span></p>
+                    <p><strong>Товаров:</strong> ${order.items.length}</p>
+                    <p><strong>Сумма:</strong> ${order.total.toFixed(2)} руб.</p>
+                    <button onclick="viewOrderDetails(${order.id})" style="margin-top: 1rem; background: var(--secondary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+                        Подробнее
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'pending': return 'orange';
+                case 'processing': return 'blue';
+                case 'shipped': return 'purple';
+                case 'delivered': return 'green';
+                default: return 'gray';
+            }
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'pending': return 'В обработке';
+                case 'processing': return 'Собирается';
+                case 'shipped': return 'Отправлен';
+                case 'delivered': return 'Доставлен';
+                default: return status;
+            }
+        }
+
+        function viewOrderDetails(orderId) {
+            // Здесь можно реализовать просмотр деталей заказа
+            alert('Детали заказа #' + orderId);
+        }
+    </script>
+</body>
+</html>
