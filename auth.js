@@ -151,6 +151,32 @@ function handleLogin(event) {
         } else {
             window.location.href = 'dashboard.html';
         }
+        // Добавление тестового администратора (выполнить один раз)
+function initializeAdmin() {
+    const users = auth.getUsers();
+    
+    // Проверяем, есть ли уже администратор
+    const adminExists = users.some(user => user.email === 'admin@mmusic.com');
+    
+    if (!adminExists) {
+        users.push({
+            id: 1,
+            name: 'Администратор',
+            email: 'admin@mmusic.com',
+            phone: '+79990001122',
+            password: 'admin123',
+            registrationDate: new Date().toISOString(),
+            isAdmin: true,
+            orders: []
+        });
+        
+        localStorage.setItem('users', JSON.stringify(users));
+        console.log('Администратор создан');
+    }
+}
+
+// Вызовите эту функцию один раз в консоли браузера после загрузки сайта
+// initializeAdmin();
     } catch (error) {
         alert(error.message);
     }
