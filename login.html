@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход / Регистрация - MMusic</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1><i class="fas fa-music"></i> MMusic</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="auth-container">
+        <div id="login-form">
+            <h2>Вход</h2>
+            <form class="auth-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="auth-btn">Войти</button>
+            </form>
+            <p class="switch-form">
+                Нет аккаунта? <a href="#" onclick="showRegisterForm()">Зарегистрироваться</a>
+            </p>
+        </div>
+
+        <div id="register-form" style="display: none;">
+            <h2>Регистрация</h2>
+            <form class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="reg-name">ФИО:</label>
+                    <input type="text" id="reg-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email:</label>
+                    <input type="email" id="reg-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Телефон:</label>
+                    <input type="tel" id="reg-phone" required pattern="[0-9]{10,11}">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Пароль:</label>
+                    <input type="password" id="reg-password" required minlength="6">
+                </div>
+                <button type="submit" class="auth-btn">Зарегистрироваться</button>
+            </form>
+            <p class="switch-form">
+                Уже есть аккаунт? <a href="#" onclick="showLoginForm()">Войти</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        function showRegisterForm() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        }
+
+        function showLoginForm() {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
