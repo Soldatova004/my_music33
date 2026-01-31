@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMusic - Музыкальный магазин</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8B008B;
+            --secondary-color: #FF69B4;
+            --accent-color: #DB7093;
+            --light-pink: #FFF0F5;
+            --dark-pink: #C71585;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1><i class="fas fa-music"></i> MMusic</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart"></i> Корзина (<span id="cart-count">0</span>)</a></li>
+                <li><a href="login.html" id="auth-link">Войти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Добро пожаловать в мир музыки!</h2>
+            <p>Инструменты, оборудование и аксессуары для музыкантов</p>
+        </section>
+
+        <section class="products" id="products-container">
+            <!-- Товары будут загружаться через JS -->
+        </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
