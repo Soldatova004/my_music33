@@ -582,8 +582,68 @@ footer p {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
+/* Стили для статусов заказов */
+.status-pending { 
+    background: #FFEAA7; 
+    color: #E17055; 
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
+.status-processing { 
+    background: #74B9FF; 
+    color: #0984E3; 
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
+.status-shipped { 
+    background: #A29BFE; 
+    color: #6C5CE7; 
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
+.status-delivered { 
+    background: #55EFC4; 
+    color: #00B894; 
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
 
+/* Стили для карточек статистики в дашборде сотрудника */
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);
+    transition: transform 0.3s;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+.stat-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--dark-pink);
+}
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+
 }
