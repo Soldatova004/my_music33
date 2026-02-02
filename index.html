@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Store - Магазин виниловых пластинок</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💿</text></svg>">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1><i class="fas fa-record-vinyl"></i> Vinyl Store</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart"></i> Корзина (<span id="cart-count">0</span>)</a></li>
+                <li><a href="login.html" id="auth-link"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Коллекция виниловых пластинок</h2>
+            <p>Классика рока, джаза и современной музыки на виниле</p>
+            <a href="catalog.html" class="hero-btn">Смотреть каталог</a>
+        </section>
+
+        <section class="featured">
+            <h2>Популярные пластинки</h2>
+            <div class="products" id="products-container">
+                <!-- Товары загружаются через JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Vinyl Store &copy; 2024 | Магазин виниловых пластинок</p>
+        <p>Телефон: +7 (999) 123-45-67 | Email: info@vinyl-store.ru</p>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
