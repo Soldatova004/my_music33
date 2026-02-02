@@ -6,6 +6,66 @@
     <title>Личный кабинет - Vinyl Store</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Стили для статусов и карточек */
+        .status-pending { 
+            background: #FFEAA7; 
+            color: #E17055; 
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .status-processing { 
+            background: #74B9FF; 
+            color: #0984E3; 
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .status-shipped { 
+            background: #A29BFE; 
+            color: #6C5CE7; 
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .status-delivered { 
+            background: #55EFC4; 
+            color: #00B894; 
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -24,41 +84,7 @@
 
     <main class="dashboard">
         <h2 class="section-title"><i class="fas fa-user-circle"></i> Личный кабинет</h2>
-        <!-- Добавить этот раздел ТОЛЬКО для сотрудников и менеджеров -->
-<div id="staff-section" style="display: none;">
-    <h3 class="section-title"><i class="fas fa-users-cog"></i> Панель сотрудника</h3>
-    
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-        <div class="stat-card">
-            <h3><i class="fas fa-users"></i> Всего клиентов</h3>
-            <div class="stat-number" id="staff-customers-count">0</div>
-        </div>
-        <div class="stat-card">
-            <h3><i class="fas fa-shopping-cart"></i> Активные заказы</h3>
-            <div class="stat-number" id="staff-active-orders">0</div>
-        </div>
-    </div>
-    
-    <div style="margin-bottom: 30px;">
-        <h4><i class="fas fa-clock"></i> Последние заказы</h4>
-        <div id="recent-orders" style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);">
-            <!-- Последние заказы загружаются через JS -->
-        </div>
-    </div>
-    
-    <div>
-        <h4><i class="fas fa-user-friends"></i> Недавние клиенты</h4>
-        <div id="recent-customers" style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);">
-            <!-- Недавние клиенты загружаются через JS -->
-        </div>
-    </div>
-    
-    <div style="margin-top: 20px; text-align: center;">
-        <a href="admin.html" class="admin-link" style="display: inline-block;">
-            <i class="fas fa-cog"></i> Полная панель управления
-        </a>
-    </div>
-</div>
+        
         <div class="user-info-card">
             <h3>Ваши данные</h3>
             <div id="user-info">
@@ -69,13 +95,52 @@
         <section>
             <h3 class="section-title"><i class="fas fa-history"></i> История заказов</h3>
             <div class="orders-list" id="user-orders">
-                <p>У вас пока нет заказов. <a href="catalog.html">Перейти в каталог</a></p>
+                <!-- Заказы загружаются через JS -->
             </div>
         </section>
     </main>
 
+    <!-- ===== ПАНЕЛЬ СОТРУДНИКА (ШАГ 2) ===== -->
+    <div id="staff-section" style="display: none; padding: 2rem; max-width: 1000px; margin: 0 auto;">
+        <h3 class="section-title"><i class="fas fa-users-cog"></i> Панель сотрудника</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+            <div class="stat-card">
+                <h3><i class="fas fa-users"></i> Всего клиентов</h3>
+                <div class="stat-number" id="staff-customers-count">0</div>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fas fa-shopping-cart"></i> Активные заказы</h3>
+                <div class="stat-number" id="staff-active-orders">0</div>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;">
+            <div>
+                <h4><i class="fas fa-clock"></i> Последние заказы</h4>
+                <div id="recent-orders" style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1); min-height: 200px;">
+                    <!-- Последние заказы загружаются через JS -->
+                </div>
+            </div>
+            
+            <div>
+                <h4><i class="fas fa-user-friends"></i> Недавние клиенты</h4>
+                <div id="recent-customers" style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1); min-height: 200px;">
+                    <!-- Недавние клиенты загружаются через JS -->
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="admin.html" class="admin-link" style="display: inline-block; padding: 12px 30px; font-size: 1.1rem;">
+                <i class="fas fa-cog"></i> Полная панель управления
+            </a>
+        </div>
+    </div>
+
     <script src="auth.js"></script>
     <script>
+        // ===== ШАГ 3: ПОЛНЫЙ JAVASCRIPT КОД =====
         document.addEventListener('DOMContentLoaded', function() {
             if (!auth.currentUser) {
                 window.location.href = 'login.html';
@@ -87,20 +152,274 @@
                 <p><strong><i class="fas fa-user"></i> ФИО:</strong> ${auth.currentUser.name}</p>
                 <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${auth.currentUser.email}</p>
                 <p><strong><i class="fas fa-phone"></i> Телефон:</strong> ${auth.currentUser.phone}</p>
-                <p><strong><i class="fas fa-calendar-alt"></i> Дата регистрации:</strong> ${new Date().toLocaleDateString()}</p>
+                <p><strong><i class="fas fa-calendar-alt"></i> Дата регистрации:</strong> ${new Date(auth.currentUser.registrationDate || Date.now()).toLocaleDateString()}</p>
                 ${auth.currentUser.role ? `<p><strong><i class="fas fa-user-tag"></i> Роль:</strong> ${auth.currentUser.role === 'employee' ? 'Сотрудник' : auth.currentUser.role === 'manager' ? 'Менеджер' : 'Покупатель'}</p>` : ''}
             `;
             
-            // Для сотрудников добавляем ссылку на админку
+            // Загружаем заказы пользователя
+            loadUserOrders();
+            
+            // Если пользователь - сотрудник или менеджер, показываем дополнительную информацию
             if (auth.currentUser.role === 'employee' || auth.currentUser.role === 'manager') {
-                const adminLink = document.createElement('a');
-                adminLink.href = 'admin.html';
-                adminLink.className = 'admin-link';
-                adminLink.innerHTML = '<i class="fas fa-cog"></i> Панель управления';
-                document.querySelector('.user-info-card').appendChild(adminLink);
+                document.getElementById('staff-section').style.display = 'block';
+                loadStaffData();
             }
         });
+        
+        function loadUserOrders() {
+            const user = auth.currentUser;
+            const ordersContainer = document.getElementById('user-orders');
+            
+            if (!user.orders || user.orders.length === 0) {
+                ordersContainer.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666; background: white; border-radius: 10px; box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);">
+                        <i class="fas fa-shopping-cart" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <h4>У вас пока нет заказов</h4>
+                        <p>Перейдите в каталог, чтобы сделать первую покупку</p>
+                        <a href="catalog.html" style="display: inline-block; margin-top: 1rem; padding: 10px 25px; background: var(--primary-color); color: white; text-decoration: none; border-radius: 8px;">
+                            <i class="fas fa-record-vinyl"></i> Перейти в каталог
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Сортируем заказы по дате (новые первые)
+            user.orders.sort((a, b) => new Date(b.date || b.id) - new Date(a.date || a.id));
+            
+            ordersContainer.innerHTML = user.orders.map(order => `
+                <div class="order-card" style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1); margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 style="color: var(--primary-color);"><i class="fas fa-receipt"></i> Заказ #${order.id}</h4>
+                        <span class="${getStatusClass(order.status)}">${getStatusText(order.status)}</span>
+                    </div>
+                    <p><strong><i class="fas fa-calendar"></i> Дата:</strong> ${new Date(order.date || order.id).toLocaleDateString()}</p>
+                    <p><strong><i class="fas fa-box"></i> Товаров:</strong> ${order.items ? order.items.length : 0} позиций</p>
+                    <p><strong><i class="fas fa-ruble-sign"></i> Сумма:</strong> <span style="color: var(--dark-pink); font-weight: bold; font-size: 1.2rem;">${order.total ? order.total.toFixed(2) : '0.00'} руб.</span></p>
+                    <button onclick="viewOrderDetails(${order.id})" 
+                            style="margin-top: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--dark-pink)); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                        <i class="fas fa-info-circle"></i> Подробнее о заказе
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function loadStaffData() {
+            const users = auth.getUsers();
+            
+            // Считаем клиентов (только покупателей)
+            const customers = users.filter(u => u.role === 'customer' || !u.role);
+            document.getElementById('staff-customers-count').textContent = customers.length;
+            
+            // Считаем активные заказы (все кроме доставленных)
+            let allOrders = [];
+            users.forEach(user => {
+                if (user.orders) {
+                    user.orders.forEach(order => {
+                        allOrders.push({
+                            ...order,
+                            userName: user.name,
+                            userEmail: user.email,
+                            userPhone: user.phone
+                        });
+                    });
+                }
+            });
+            
+            const activeOrders = allOrders.filter(o => o.status !== 'delivered');
+            document.getElementById('staff-active-orders').textContent = activeOrders.length;
+            
+            // Показываем последние 5 заказов
+            const recentOrders = allOrders
+                .sort((a, b) => new Date(b.date || b.id) - new Date(a.date || a.id))
+                .slice(0, 5);
+            
+            const ordersHtml = recentOrders.length > 0 ? 
+                recentOrders.map(order => {
+                    const customer = users.find(u => u.orders && u.orders.some(o => o.id === order.id));
+                    const itemsCount = order.items ? order.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
+                    
+                    return `
+                        <div style="padding: 12px; border-bottom: 1px solid #FFE4E9; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: var(--primary-color);">#${order.id}</strong><br>
+                                <small>${customer ? customer.name.split(' ')[0] : 'Клиент'}</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <strong>${order.total ? order.total.toFixed(2) : '0.00'} руб.</strong><br>
+                                <small>${itemsCount} шт. | <span class="${getStatusClass(order.status)}">${getStatusText(order.status)}</span></small>
+                            </div>
+                        </div>
+                    `;
+                }).join('') :
+                '<div style="text-align: center; padding: 2rem; color: #666;"><i class="fas fa-shopping-cart"></i><br>Заказов пока нет</div>';
+            
+            document.getElementById('recent-orders').innerHTML = `
+                <div style="max-height: 300px; overflow-y: auto;">
+                    ${ordersHtml}
+                </div>
+            `;
+            
+            // Показываем последних 5 клиентов
+            const recentCustomers = customers
+                .sort((a, b) => new Date(b.registrationDate) - new Date(a.registrationDate))
+                .slice(0, 5);
+            
+            const customersHtml = recentCustomers.length > 0 ?
+                recentCustomers.map(customer => {
+                    const orderCount = customer.orders ? customer.orders.length : 0;
+                    const totalSpent = customer.orders ? 
+                        customer.orders.reduce((sum, order) => sum + (order.total || 0), 0) : 0;
+                    
+                    return `
+                        <div style="padding: 12px; border-bottom: 1px solid #FFE4E9;">
+                            <strong>${customer.name}</strong>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: #666; margin-top: 5px;">
+                                <span><i class="fas fa-envelope"></i> ${customer.email}</span>
+                                <span style="color: var(--dark-pink); font-weight: bold;">
+                                    ${orderCount} зак. / ${totalSpent.toFixed(2)} руб.
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('') :
+                '<div style="text-align: center; padding: 2rem; color: #666;"><i class="fas fa-users"></i><br>Клиентов пока нет</div>';
+            
+            document.getElementById('recent-customers').innerHTML = `
+                <div style="max-height: 300px; overflow-y: auto;">
+                    ${customersHtml}
+                </div>
+            `;
+        }
+        
+        function getStatusClass(status) {
+            switch(status) {
+                case 'pending': return 'status-pending';
+                case 'processing': return 'status-processing';
+                case 'shipped': return 'status-shipped';
+                case 'delivered': return 'status-delivered';
+                default: return 'status-pending';
+            }
+        }
+        
+        function getStatusText(status) {
+            switch(status) {
+                case 'pending': return 'В обработке';
+                case 'processing': return 'Собирается';
+                case 'shipped': return 'Отправлен';
+                case 'delivered': return 'Доставлен';
+                default: return status;
+            }
+        }
+        
+        function viewOrderDetails(orderId) {
+            const user = auth.currentUser;
+            let order = null;
+            
+            // Ищем заказ у текущего пользователя
+            if (user.orders) {
+                order = user.orders.find(o => o.id === orderId);
+            }
+            
+            // Если заказ не найден у пользователя, но он сотрудник/менеджер - ищем во всех заказах
+            if (!order && (user.role === 'employee' || user.role === 'manager')) {
+                const users = auth.getUsers();
+                users.forEach(u => {
+                    if (u.orders) {
+                        const foundOrder = u.orders.find(o => o.id === orderId);
+                        if (foundOrder) {
+                            order = foundOrder;
+                            // Добавляем информацию о клиенте
+                            order.customerName = u.name;
+                            order.customerEmail = u.email;
+                            order.customerPhone = u.phone;
+                        }
+                    }
+                });
+            }
+            
+            if (!order) {
+                alert('Заказ не найден');
+                return;
+            }
+            
+            const modalContent = `
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">
+                    <i class="fas fa-receipt"></i> Заказ #${orderId}
+                </h3>
+                
+                ${order.customerName ? `
+                    <div style="background: #FFF9FD; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-user"></i> Клиент</h4>
+                        <p><strong>ФИО:</strong> ${order.customerName}</p>
+                        <p><strong>Email:</strong> ${order.customerEmail}</p>
+                        <p><strong>Телефон:</strong> ${order.customerPhone || 'Не указан'}</p>
+                    </div>
+                ` : ''}
+                
+                <div style="margin-bottom: 20px;">
+                    <p><strong><i class="fas fa-calendar"></i> Дата заказа:</strong> ${new Date(order.date || orderId).toLocaleString()}</p>
+                    <p><strong><i class="fas fa-tag"></i> Статус:</strong> <span class="${getStatusClass(order.status)}">${getStatusText(order.status)}</span></p>
+                </div>
+                
+                ${order.items && order.items.length > 0 ? `
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px;">
+                        <i class="fas fa-box"></i> Состав заказа
+                    </h4>
+                    <div style="max-height: 250px; overflow-y: auto; margin-bottom: 20px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: var(--light-pink);">
+                                <tr>
+                                    <th style="padding: 10px; text-align: left;">Товар</th>
+                                    <th style="padding: 10px; text-align: center;">Кол-во</th>
+                                    <th style="padding: 10px; text-align: right;">Цена</th>
+                                    <th style="padding: 10px; text-align: right;">Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${order.items.map(item => `
+                                    <tr style="border-bottom: 1px solid #FFE4E9;">
+                                        <td style="padding: 10px;">${item.name}</td>
+                                        <td style="padding: 10px; text-align: center;">${item.quantity} шт.</td>
+                                        <td style="padding: 10px; text-align: right;">${item.price} руб.</td>
+                                        <td style="padding: 10px; text-align: right; font-weight: bold;">
+                                            ${(item.quantity * item.price).toFixed(2)} руб.
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : '<p>Товары не указаны</p>'}
+                
+                <div style="background: linear-gradient(135deg, var(--light-pink), white); padding: 20px; border-radius: 10px; border: 2px solid var(--secondary-color); text-align: right;">
+                    <h3 style="color: var(--primary-color); margin: 0;">
+                        ИТОГО: <span style="color: var(--dark-pink);">${order.total ? order.total.toFixed(2) : '0.00'} руб.</span>
+                    </h3>
+                </div>
+            `;
+            
+            // Создаем и показываем модальное окно
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.7); display: flex; justify-content: center; 
+                align-items: center; z-index: 10000;
+            `;
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                    ${modalContent}
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" 
+                                style="padding: 12px 35px; background: linear-gradient(135deg, var(--primary-color), var(--dark-pink)); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">
+                            <i class="fas fa-times"></i> Закрыть
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
     </script>
 </body>
-
 </html>
