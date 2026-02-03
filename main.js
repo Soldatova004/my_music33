@@ -1,10 +1,16 @@
 // main.js - Основной файл с виниловыми пластинками
-const products = [
+const vinylImages = [
+    "https://picsum.photos/400/400?random=1",
+    "https://picsum.photos/400/400?random=2", 
+    "https://picsum.photos/400/400?random=3",
+    "https://picsum.photos/400/400?random=4",
+    "https://picsum.photos/400/400?random=5",
+    "https://picsum.photos/400/400?random=6" 
     {
         id: 1,
         name: "The Beatles - Abbey Road",
         price: 3499,
-        image: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Легендарный альбом 1969 года, последняя совместная запись The Beatles",
         genre: "Рок",
         year: 1969,
@@ -14,7 +20,7 @@ const products = [
         id: 2,
         name: "Pink Floyd - The Dark Side of the Moon",
         price: 3999,
-        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Культовый прогрессив-рок альбом, один из самых продаваемых в истории",
         genre: "Прогрессив-рок",
         year: 1973,
@@ -24,7 +30,7 @@ const products = [
         id: 3,
         name: "Miles Davis - Kind of Blue",
         price: 3299,
-        image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Величайший джазовый альбом всех времен, эталон модального джаза",
         genre: "Джаз",
         year: 1959,
@@ -34,7 +40,7 @@ const products = [
         id: 4,
         name: "Daft Punk - Random Access Memories",
         price: 2899,
-        image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Грэмми-альбом электронной музыки, современная классика",
         genre: "Электроника",
         year: 2013,
@@ -54,7 +60,7 @@ const products = [
         id: 6,
         name: "Queen - A Night at the Opera",
         price: 3699,
-        image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Шедевр рок-музыки с легендарной 'Bohemian Rhapsody'",
         genre: "Рок",
         year: 1975,
@@ -64,7 +70,7 @@ const products = [
         id: 7,
         name: "Nirvana - Nevermind",
         price: 3199,
-        image: "https://images.unsplash.com/photo-1519281682544-5f37c4b14c47?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Икона гранжа, изменившая лицо рок-музыки 90-х",
         genre: "Гранж",
         year: 1991,
@@ -74,7 +80,7 @@ const products = [
         id: 8,
         name: "Radiohead - OK Computer",
         price: 2999,
-        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL+RECORD",
         description: "Прогрессив-рок альбом, предсказавший цифровую эпоху",
         genre: "Альтернативный рок",
         year: 1997,
@@ -166,4 +172,5 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.cart) {
         cart.updateCartCount();
     }
+
 });
