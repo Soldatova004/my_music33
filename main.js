@@ -1,23 +1,7 @@
-// main.js - Основной файл с виниловыми пластинками
-// ОПТИМИЗАЦИЯ: Ленивая загрузка картинок
-document.addEventListener('DOMContentLoaded', function() {
-    // Отложенный рендеринг товаров
-    setTimeout(renderProducts, 100);
-    
-    // Ленивая загрузка изображений
-    const lazyImages = document.querySelectorAll('.product-image');
-    lazyImages.forEach(img => {
-        const originalSrc = img.src;
-        img.src = ''; // Сначала пустая
-        setTimeout(() => {
-            img.src = originalSrc;
-        }, 300);
-    });
-});
-// main.js - ГЛАВНЫЙ ФАЙЛ С ТОВАРАМИ
-console.log('🔄 main.js загружен');
+// main.js - ОСНОВНОЙ ФАЙЛ С КАТАЛОГОМ
+console.log('✅ main.js загружен');
 
-// ДАННЫЕ ТОВАРОВ (виниловые пластинки)
+// ДАННЫЕ ТОВАРОВ
 const products = [
     {
         id: 1,
@@ -81,58 +65,80 @@ const products = [
     }
 ];
 
-// ОСНОВНАЯ ФУНКЦИЯ РЕНДЕРИНГА ТОВАРОВ
+// ФУНКЦИЯ ДЛЯ РЕНДЕРИНГА ТОВАРОВ
 function renderProducts() {
-    console.log('🔄 Запуск renderProducts()');
+    console.log('🔄 Запускаем renderProducts()');
     
+    // Находим контейнер для товаров
     const container = document.getElementById('products-container');
-    console.log('Контейнер найден?', !!container);
+    console.log('Контейнер найден:', container);
     
     if (!container) {
-        console.error('❌ ОШИБКА: Не найден products-container!');
-        console.log('Ищем элементы с products-container:');
-        console.log(document.querySelectorAll('#products-container'));
+        console.error('❌ ОШИБКА: Не найден элемент с id="products-container"');
         return;
     }
     
-    console.log('Рендерим', products.length, 'товаров');
+    console.log('Товаров для рендеринга:', products.length);
     
     // Очищаем контейнер
     container.innerHTML = '';
     
     // Создаем HTML для каждого товара
     products.forEach(product => {
-        const productHTML = `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">${product.name}</h3>
-                    <p><strong>Жанр:</strong> ${product.genre}</p>
-                    <p>${product.description}</p>
-                    <p><strong>Год:</strong> ${product.year}</p>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
-                        <input type="number" id="qty-${product.id}" value="1" min="1" max="10" readonly>
-                        <button class="quantity-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
-                    </div>
-                    <p class="product-price">${product.price} руб.</p>
-                    <button class="add-to-cart" onclick="addToCart(${product.id})">
-                        🛒 Добавить в корзину
-                    </button>
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <p><strong>Жанр:</strong> ${product.genre}</p>
+                <p>${product.description}</p>
+                <p><strong>Год:</strong> ${product.year}</p>
+                <div class="quantity-controls">
+                    <button class="quantity-btn minus-btn" data-id="${product.id}">-</button>
+                    <input type="number" id="qty-${product.id}" value="1" min="1" max="10" readonly>
+                    <button class="quantity-btn plus-btn" data-id="${product.id}">+</button>
                 </div>
+                <p class="product-price">${product.price} руб.</p>
+                <button class="add-to-cart" data-id="${product.id}">
+                    🛒 Добавить в корзину
+                </button>
             </div>
         `;
         
-        container.innerHTML += productHTML;
+        container.appendChild(productCard);
     });
     
     console.log('✅ Товары успешно отрендерены!');
+    
+    // Добавляем обработчики событий
+    addEventListeners();
 }
 
-// ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ КОЛИЧЕСТВОМ
-function updateQuantity(productId, change) {
-    console.log('Изменение количества для товара', productId, 'на', change);
+// ФУНКЦИЯ ДЛЯ ОБРАБОТЧИКОВ СОБЫТИЙ
+function addEventListeners() {
+    console.log('🎯 Добавляем обработчики событий...');
     
+    // Обработчики для кнопок количества
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = parseInt(this.dataset.id);
+            const isPlus = this.classList.contains('plus-btn');
+            updateQuantity(productId, isPlus ? 1 : -1);
+        });
+    });
+    
+    // Обработчики для кнопок добавления в корзину
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = parseInt(this.dataset.id);
+            addToCart(productId);
+        });
+    });
+}
+
+// ФУНКЦИЯ ИЗМЕНЕНИЯ КОЛИЧЕСТВА
+function updateQuantity(productId, change) {
     const input = document.getElementById(`qty-${productId}`);
     if (!input) {
         console.error('Не найден input для товара', productId);
@@ -147,35 +153,34 @@ function updateQuantity(productId, change) {
     if (newValue > 10) newValue = 10;
     
     input.value = newValue;
-    console.log('Новое значение:', newValue);
+    console.log('Товар', productId, 'новое количество:', newValue);
 }
 
 // ФУНКЦИЯ ДОБАВЛЕНИЯ В КОРЗИНУ
 function addToCart(productId) {
-    console.log('Добавление в корзину товара', productId);
+    console.log('🛒 Добавляем в корзину товар', productId);
     
     const product = products.find(p => p.id === productId);
     if (!product) {
         console.error('Товар не найден:', productId);
-        alert('Ошибка: товар не найден');
+        alert('❌ Ошибка: товар не найден');
         return;
     }
     
     const quantityInput = document.getElementById(`qty-${productId}`);
     const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
     
-    console.log('Товар:', product.name, 'Количество:', quantity);
+    console.log('Добавляем:', product.name, 'Количество:', quantity);
     
     // Проверяем есть ли корзина
     if (window.cart && typeof cart.addItem === 'function') {
         cart.addItem(product, quantity);
-        alert(`✅ "${product.name}" добавлен в корзину!`);
     } else {
-        console.error('Корзина не инициализирована!');
-        alert('Товар добавлен в корзину (тестовый режим)');
+        // Если корзины нет, используем простой alert
+        alert(`✅ "${product.name}" добавлен в корзину!`);
     }
     
-    // Сбрасываем количество после добавления
+    // Сбрасываем количество
     if (quantityInput) {
         quantityInput.value = 1;
     }
@@ -183,9 +188,20 @@ function addToCart(productId) {
 
 // ЗАГРУЗКА ПРИ СТАРТЕ
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('📄 Страница загружена, запускаем инициализацию...');
+    console.log('📄 Страница загружена');
     
-    // Обновляем ссылки авторизации
+    // Проверяем есть ли контейнер для товаров
+    const productsContainer = document.getElementById('products-container');
+    
+    if (productsContainer) {
+        console.log('🎯 Найдены товары на странице, рендерим...');
+        // Небольшая задержка чтобы точно всё загрузилось
+        setTimeout(renderProducts, 100);
+    } else {
+        console.log('ℹ️ На этой странице нет товаров');
+    }
+    
+    // Обновляем навигацию если есть auth
     if (window.auth && typeof auth.updateAuthLinks === 'function') {
         auth.updateAuthLinks();
     }
@@ -194,17 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.cart && typeof cart.updateCartCount === 'function') {
         cart.updateCartCount();
     }
-    
-    // Проверяем есть ли контейнер для товаров на этой странице
-    const productsContainer = document.getElementById('products-container');
-    if (productsContainer) {
-        console.log('🎯 Найдены товары на этой странице, рендерим...');
-        renderProducts();
-    } else {
-        console.log('ℹ️ На этой странице нет товаров');
-    }
-    
-    console.log('✅ Инициализация завершена');
 });
 
 // Делаем функции доступными глобально
@@ -212,4 +217,4 @@ window.renderProducts = renderProducts;
 window.updateQuantity = updateQuantity;
 window.addToCart = addToCart;
 
-console.log('✅ main.js полностью загружен');
+console.log('✅ main.js готов к работе');
