@@ -6,97 +6,76 @@
     <title>Vinyl Store - Магазин виниловых пластинок</title>
     <style>
         /* Те же стили что и в catalog.html */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
             background: #FFF0F5;
         }
         
         .navbar {
             background: linear-gradient(135deg, #8B008B, #FF69B4);
-            padding: 1rem 2rem;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
         }
         
         .logo h1 {
-            color: white;
-            font-size: 1.5rem;
+            margin: 0;
+            font-size: 1.8rem;
         }
         
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            gap: 15px;
         }
         
         .nav-links a {
             color: white;
             text-decoration: none;
-            padding: 0.5rem 1rem;
+            padding: 8px 15px;
             border-radius: 5px;
-        }
-        
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
         }
         
         .hero {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 80px 20px;
             background: linear-gradient(135deg, #8B008B, #FF69B4);
             color: white;
         }
         
         .hero h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
         
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .product-card {
+        .hero-btn {
+            display: inline-block;
             background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);
+            color: #8B008B;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
         }
         
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .product-info {
-            padding: 1.5rem;
-        }
-        
-        .add-to-cart {
+        footer {
+            text-align: center;
+            padding: 30px;
             background: #8B008B;
             color: white;
-            border: none;
-            padding: 0.8rem;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
+    <!-- ШАПКА -->
     <header>
         <nav class="navbar">
             <div class="logo">
@@ -111,40 +90,47 @@
         </nav>
     </header>
 
-    <main>
-        <section class="hero">
-            <h2>Коллекция виниловых пластинок</h2>
-            <p>Классика рока, джаза и современной музыки на виниле</p>
-            <a href="catalog.html" style="display: inline-block; background: white; color: #8B008B; padding: 1rem 2rem; border-radius: 30px; text-decoration: none; margin-top: 1rem; font-weight: bold;">
-                👉 Смотреть каталог
-            </a>
-        </section>
+    <!-- ГЛАВНЫЙ БАННЕР -->
+    <section class="hero">
+        <h2>Коллекция виниловых пластинок</h2>
+        <p>Классика рока, джаза и современной музыки на виниле</p>
+        <a href="catalog.html" class="hero-btn">🎵 Перейти в каталог</a>
+    </section>
 
-        <section>
-            <h2 style="text-align: center; padding: 2rem; color: #8B008B;">🎧 Популярные пластинки</h2>
-            <div class="products" id="products-container">
-                <!-- Товары загрузятся через JS -->
-                <div style="text-align: center; padding: 3rem; grid-column: 1 / -1;">
-                    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-                    <p style="margin-top: 20px; color: #666;">Загрузка товаров...</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script src="auth.js"></script>
-    <script src="cart.js"></script>
-    <script src="main.js"></script>
-    
+    <!-- СКРИПТ ДЛЯ ОБНОВЛЕНИЯ ССЫЛОК -->
     <script>
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
+        // Обновление счетчика корзины
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
             }
-        `;
-        document.head.appendChild(style);
+        }
+        
+        // Обновление ссылки авторизации
+        function updateAuthLink() {
+            const authLink = document.getElementById('auth-link');
+            if (!authLink) return;
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (currentUser) {
+                authLink.innerHTML = `👤 ${currentUser.name.split(' ')[0]}`;
+                authLink.href = 'dashboard.html';
+            } else {
+                authLink.innerHTML = '🔐 Войти';
+                authLink.href = 'login.html';
+            }
+        }
+        
+        // При загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            updateAuthLink();
+        });
     </script>
 </body>
 </html>
