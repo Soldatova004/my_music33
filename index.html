@@ -3,133 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinyl Store - Магазин виниловых пластинок</title>
-    <style>
-        /* Те же стили что и в catalog.html */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #FFF0F5;
-        }
-        
-        .navbar {
-            background: linear-gradient(135deg, #8B008B, #FF69B4);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-        
-        .logo h1 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: 15px;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-        
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #8B008B, #FF69B4);
-            color: white;
-        }
-        
-        .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        
-        .hero-btn {
-            display: inline-block;
-            background: white;
-            color: #8B008B;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 20px;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #8B008B;
-            color: white;
-            margin-top: 40px;
-        }
-    </style>
+    <title>Vinyl Store</title>
 </head>
-<body>
+<body style="font-family: Arial; margin: 0; background: #FFF0F5;">
     <!-- ШАПКА -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <h1>🎵 Vinyl Store</h1>
+    <div style="background: #8B008B; color: white; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 style="margin: 0;">🎵 Vinyl Store</h1>
+            <div>
+                <a href="index.html" style="color: white; margin-right: 15px;">🏠 Главная</a>
+                <a href="catalog.html" style="color: white; margin-right: 15px;">📋 Каталог</a>
+                <a href="cart.html" style="color: white; margin-right: 15px;">🛒 Корзина (<span id="cart-count">0</span>)</a>
+                <a href="login.html" style="color: white;">🔐 Войти</a>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html">🏠 Главная</a></li>
-                <li><a href="catalog.html">📋 Каталог</a></li>
-                <li><a href="cart.html" id="cart-link">🛒 Корзина (<span id="cart-count">0</span>)</a></li>
-                <li><a href="login.html" id="auth-link">🔐 Войти</a></li>
-            </ul>
-        </nav>
-    </header>
+        </div>
+    </div>
 
-    <!-- ГЛАВНЫЙ БАННЕР -->
-    <section class="hero">
-        <h2>Коллекция виниловых пластинок</h2>
-        <p>Классика рока, джаза и современной музыки на виниле</p>
-        <a href="catalog.html" class="hero-btn">🎵 Перейти в каталог</a>
-    </section>
+    <!-- ГЛАВНАЯ -->
+    <div style="text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #8B008B, #FF69B4); color: white;">
+        <h2 style="font-size: 3rem;">Vinyl Store</h2>
+        <p style="font-size: 1.2rem;">Магазин виниловых пластинок</p>
+        <a href="catalog.html" style="display: inline-block; margin-top: 30px; padding: 15px 40px; background: white; color: #8B008B; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1rem;">
+            🎵 Смотреть каталог
+        </a>
+    </div>
 
-    <!-- СКРИПТ ДЛЯ ОБНОВЛЕНИЯ ССЫЛОК -->
+    <!-- СКРИПТ -->
     <script>
-        // Обновление счетчика корзины
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
             
-            const cartCountElement = document.getElementById('cart-count');
-            if (cartCountElement) {
-                cartCountElement.textContent = totalItems;
+            const counter = document.getElementById('cart-count');
+            if (counter) {
+                counter.textContent = count;
             }
         }
         
-        // Обновление ссылки авторизации
-        function updateAuthLink() {
-            const authLink = document.getElementById('auth-link');
-            if (!authLink) return;
-            
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            if (currentUser) {
-                authLink.innerHTML = `👤 ${currentUser.name.split(' ')[0]}`;
-                authLink.href = 'dashboard.html';
-            } else {
-                authLink.innerHTML = '🔐 Войти';
-                authLink.href = 'login.html';
-            }
-        }
-        
-        // При загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
-            updateAuthLink();
         });
     </script>
 </body>
