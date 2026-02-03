@@ -4,230 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина - Vinyl Store</title>
-    <style>
-        /* СТИЛИ ДЛЯ КОРЗИНЫ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: #FFF0F5;
-            min-height: 100vh;
-        }
-        
-        /* ШАПКА */
-        .navbar {
-            background: linear-gradient(135deg, #8B008B, #FF69B4);
-            padding: 1rem 2rem;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-        
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        /* КОНТЕЙНЕР КОРЗИНЫ */
-        .cart-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(139, 0, 139, 0.1);
-        }
-        
-        .cart-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid #FF69B4;
-        }
-        
-        .cart-header h2 {
-            color: #8B008B;
-            font-size: 2rem;
-        }
-        
-        /* ИТОГОВАЯ СУММА */
-        .cart-summary {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 3px solid #FF69B4;
-            text-align: right;
-        }
-        
-        .cart-summary p {
-            font-size: 1.5rem;
-            color: #8B008B;
-            margin-bottom: 1rem;
-        }
-        
-        .checkout-btn {
-            background: linear-gradient(135deg, #8B008B, #FF69B4);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .checkout-btn:hover {
-            transform: translateY(-3px);
-        }
-        
-        .checkout-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        /* ПУСТАЯ КОРЗИНА */
-        .empty-cart {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-        }
-        
-        .empty-cart-icon {
-            font-size: 4rem;
-            color: #ccc;
-            margin-bottom: 1rem;
-        }
-        
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .cart-container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            
-            .cart-item {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
 </head>
-<body>
+<body style="font-family: Arial; margin: 0; background: #FFF0F5;">
     <!-- ШАПКА -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <h1>🎵 Vinyl Store</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">🏠 Главная</a></li>
-                <li><a href="catalog.html">📋 Каталог</a></li>
-                <li><a href="cart.html" id="cart-link">🛒 Корзина (<span id="cart-count">0</span>)</a></li>
-                <li><a href="login.html" id="auth-link">🔐 Войти</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- КОРЗИНА -->
-    <main>
-        <div class="cart-container">
-            <div class="cart-header">
-                <h2>🛒 Ваша корзина</h2>
-                <p>Товары, которые вы выбрали</p>
-            </div>
-            
-            <!-- ТОВАРЫ В КОРЗИНЕ -->
-            <div id="cart-items">
-                <!-- Товары загрузятся через JS -->
-                <div style="text-align: center; padding: 2rem; color: #666;">
-                    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-                    <p style="margin-top: 20px;">Загрузка корзины...</p>
-                </div>
-            </div>
-            
-            <!-- ИТОГО -->
-            <div class="cart-summary">
-                <p>Итого: <span id="cart-total">0.00</span> ₽</p>
-                <button class="checkout-btn" onclick="checkout()">
-                    💳 Оформить заказ
-                </button>
+    <div style="background: #8B008B; color: white; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 style="margin: 0;">🎵 Vinyl Store</h1>
+            <div>
+                <a href="index.html" style="color: white; margin-right: 15px;">🏠 Главная</a>
+                <a href="catalog.html" style="color: white; margin-right: 15px;">📋 Каталог</a>
+                <a href="cart.html" style="color: white; margin-right: 15px;">🛒 Корзина (<span id="cart-count">0</span>)</a>
+                <a href="login.html" style="color: white;">🔐 Войти</a>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
-    <script src="auth.js"></script>
-    <script src="cart.js"></script>
-    
-    <script>
-        // Анимация загрузки
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
+    <!-- КОРЗИНА -->
+    <div style="max-width: 800px; margin: 30px auto; padding: 20px;">
+        <h2 style="color: #8B008B; text-align: center;">🛒 Ваша корзина</h2>
         
-        // Проверка загрузки
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🛒 Страница корзины загружена');
+        <!-- ТОВАРЫ В КОРЗИНЕ -->
+        <div id="cart-items" style="margin: 30px 0;">
+            <!-- Товары появятся здесь -->
+        </div>
+        
+        <!-- ИТОГО -->
+        <div style="text-align: right; margin-top: 30px; padding-top: 20px; border-top: 3px solid #FF69B4;">
+            <h3 style="color: #8B008B;">Итого: <span id="total-price">0</span> ₽</h3>
+            <button onclick="checkout()" style="padding: 15px 40px; background: #8B008B; color: white; border: none; border-radius: 10px; font-size: 1.2rem; cursor: pointer; font-weight: bold;">
+                💳 Оформить заказ
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ПОКАЗАТЬ КОРЗИНУ
+        function showCart() {
+            const container = document.getElementById('cart-items');
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <div style="font-size: 4rem;">🛒</div>
+                        <h3>Корзина пуста</h3>
+                        <p>Добавьте товары из каталога</p>
+                        <a href="catalog.html" style="display: inline-block; margin-top: 15px; padding: 10px 25px; background: #8B008B; color: white; text-decoration: none; border-radius: 8px;">
+                            Перейти в каталог
+                        </a>
+                    </div>
+                `;
+                document.getElementById('total-price').textContent = '0';
+                updateCartCount();
+                return;
+            }
+            
+            let total = 0;
+            let html = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * (item.quantity || 1);
+                total += itemTotal;
+                
+                html += `
+                    <div style="display: flex; align-items: center; padding: 15px; margin-bottom: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <div style="background: #8B008B; width: 60px; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 15px;">
+                            🎵
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0 0 5px 0; color: #8B008B;">${item.name}</h4>
+                            <p style="margin: 0; color: #666;">Цена: ${item.price} ₽</p>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 10px; margin-right: 20px;">
+                            <button onclick="updateCartQuantity(${item.id}, -1)" style="background: #FF69B4; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">-</button>
+                            <span style="font-weight: bold; min-width: 30px; text-align: center;">${item.quantity || 1}</span>
+                            <button onclick="updateCartQuantity(${item.id}, 1)" style="background: #FF69B4; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">+</button>
+                        </div>
+                        
+                        <div style="text-align: right;">
+                            <p style="color: #C71585; font-weight: bold; font-size: 1.3rem; margin: 0 0 10px 0;">${itemTotal} ₽</p>
+                            <button onclick="removeFromCart(${item.id})" style="background: none; border: none; color: #FF69B4; cursor: pointer; font-size: 0.9rem;">
+                                Удалить
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            document.getElementById('total-price').textContent = total;
+            updateCartCount();
+        }
+
+        // ИЗМЕНИТЬ КОЛИЧЕСТВО В КОРЗИНЕ
+        function updateCartQuantity(productId, change) {
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const item = cart.find(item => item.id === productId);
+            
+            if (item) {
+                const newQuantity = (item.quantity || 1) + change;
+                if (newQuantity < 1) {
+                    // Если 0 - удаляем
+                    cart = cart.filter(item => item.id !== productId);
+                } else {
+                    item.quantity = newQuantity;
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                showCart();
+            }
+        }
+
+        // УДАЛИТЬ ИЗ КОРЗИНЫ
+        function removeFromCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showCart();
+            alert('Товар удален');
+        }
+
+        // ОФОРМИТЬ ЗАКАЗ
+        function checkout() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            if (cart.length === 0) {
+                alert('Корзина пуста!');
+                return;
+            }
             
             // Проверяем авторизацию
-            if (window.auth && auth.currentUser) {
-                console.log('👤 Пользователь авторизован:', auth.currentUser.name);
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user) {
+                alert('Войдите в систему для оформления заказа');
+                window.location.href = 'login.html';
+                return;
             }
             
-            // Запускаем рендеринг корзины
-            setTimeout(() => {
-                if (window.cart && cart.renderCart) {
-                    console.log('🎯 Запускаем рендеринг корзины...');
-                    cart.renderCart();
-                } else {
-                    console.error('❌ Корзина не загрузилась!');
+            // Создаем заказ
+            const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+            const order = {
+                id: Date.now(),
+                items: [...cart],
+                total: total,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Сохраняем заказ у пользователя
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.email === user.email);
+            
+            if (userIndex !== -1) {
+                if (!users[userIndex].orders) {
+                    users[userIndex].orders = [];
                 }
-            }, 200);
-        });
-        
-        // Функция оформления заказа
-        window.checkout = function() {
-            console.log('💰 Нажата кнопка оформления заказа');
-            
-            if (window.cart && cart.checkout) {
-                cart.checkout();
-            } else {
-                alert('❌ Корзина не загрузилась. Обновите страницу.');
+                users[userIndex].orders.push(order);
+                localStorage.setItem('users', JSON.stringify(users));
             }
-        };
+            
+            // Очищаем корзину
+            localStorage.removeItem('cart');
+            
+            // Показываем сообщение
+            alert(`✅ Заказ #${order.id} оформлен!\nСумма: ${total} ₽`);
+            
+            // Перенаправляем
+            window.location.href = 'dashboard.html';
+        }
+
+        // ОБНОВИТЬ СЧЕТЧИК
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            
+            const counter = document.getElementById('cart-count');
+            if (counter) {
+                counter.textContent = count;
+            }
+        }
+
+        // ЗАГРУЗИТЬ ПРИ СТАРТЕ
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Корзина загружается...');
+            showCart();
+            updateCartCount();
+        });
     </script>
 </body>
 </html>
