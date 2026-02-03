@@ -1,4 +1,19 @@
 // main.js - Основной файл с виниловыми пластинками
+// ОПТИМИЗАЦИЯ: Ленивая загрузка картинок
+document.addEventListener('DOMContentLoaded', function() {
+    // Отложенный рендеринг товаров
+    setTimeout(renderProducts, 100);
+    
+    // Ленивая загрузка изображений
+    const lazyImages = document.querySelectorAll('.product-image');
+    lazyImages.forEach(img => {
+        const originalSrc = img.src;
+        img.src = ''; // Сначала пустая
+        setTimeout(() => {
+            img.src = originalSrc;
+        }, 300);
+    });
+});
 const vinylImages = [
     "https://picsum.photos/400/400?random=1",
     "https://picsum.photos/400/400?random=2", 
@@ -174,4 +189,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
 
