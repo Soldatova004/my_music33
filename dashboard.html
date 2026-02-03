@@ -422,8 +422,48 @@
             
             document.body.appendChild(modal);
         }
+        </script>
   <script src="optimize.js"></script>
+    <!-- Индикатор загрузки -->
+<div id="global-loader" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="text-align: center;">
+        <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
+        <p style="margin-top: 20px; color: #8B008B; font-weight: bold;">Загрузка...</p>
+    </div>
+</div>
+
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    // Показывать индикатор при действиях
+    document.addEventListener('DOMContentLoaded', function() {
+        // Показываем на 1 секунду при загрузке
+        const loader = document.getElementById('global-loader');
+        loader.style.display = 'flex';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 1000);
+        
+        // Вешаем на все кнопки
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', function() {
+                if(this.tagName === 'A' || this.type === 'submit') {
+                    loader.style.display = 'flex';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 1500);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
+
 
 
