@@ -1,0 +1,34 @@
+# netlify.toml - настройки кэширования для Netlify
+
+[build]
+  # Где лежат файлы сайта
+  publish = "."
+
+# Настройки кэширования для ВСЕХ файлов
+[[headers]]
+  # Для всех файлов (* - означает "любые")
+  for = "/*"
+  [headers.values]
+    # Кэшировать на 1 час (3600 секунд)
+    Cache-Control = "public, max-age=3600"
+
+# Особые настройки для JavaScript файлов
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    # JS файлы кэшировать на 1 ГОД (они редко меняются)
+    Cache-Control = "public, max-age=31536000"
+
+# Особые настройки для CSS файлов  
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    # CSS тоже кэшировать на 1 год
+    Cache-Control = "public, max-age=31536000"
+
+# Настройки для HTML файлов
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    # HTML кэшировать меньше (они могут меняться)
+    Cache-Control = "public, max-age=600"
