@@ -5,80 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог - Vinyl Store</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+    <!-- ШАПКА -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <h1><i class="fas fa-record-vinyl"></i> Vinyl Store</h1>
+                <h1>🎵 Vinyl Store</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart"></i> Корзина (<span id="cart-count">0</span>)</a></li>
-                <li><a href="login.html" id="auth-link"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+                <li><a href="index.html">🏠 Главная</a></li>
+                <li><a href="catalog.html">📋 Каталог</a></li>
+                <li><a href="cart.html" id="cart-link">🛒 Корзина (<span id="cart-count">0</span>)</a></li>
+                <li><a href="login.html" id="auth-link">🔐 Войти</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="catalog-header">
-            <h2>Все пластинки</h2>
-            <p>Выберите из нашей коллекции винила</p>
-        </section>
-
-        <section class="products" id="products-container">
-            <!-- Товары загружаются через JS -->
-        </section>
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
+    <main style="padding: 2rem;">
+        <h1 style="color: #8B008B; text-align: center; margin-bottom: 1rem;">📀 Все виниловые пластинки</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 3rem;">Выберите из нашей коллекции</p>
+        
+        <!-- КОНТЕЙНЕР ДЛЯ ТОВАРОВ -->
+        <div class="products" id="products-container">
+            <!-- ТОВАРЫ БУДУТ ЗАГРУЖЕНЫ ЧЕРЕЗ JavaScript -->
+            <div style="text-align: center; padding: 3rem; color: #666;">
+                <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
+                <p style="margin-top: 20px;">Загрузка каталога...</p>
+            </div>
+        </div>
     </main>
 
+    <!-- ПОДКЛЮЧЕНИЕ JavaScript -->
     <script src="auth.js"></script>
     <script src="cart.js"></script>
     <script src="main.js"></script>
-    <script src="optimize.js"></script>
-    <!-- Индикатор загрузки -->
-<div id="global-loader" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="text-align: center;">
-        <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-        <p style="margin-top: 20px; color: #8B008B; font-weight: bold;">Загрузка...</p>
-    </div>
-</div>
-
-<style>
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-</style>
-
-<script>
-    // Показывать индикатор при действиях
-    document.addEventListener('DOMContentLoaded', function() {
-        // Показываем на 1 секунду при загрузке
-        const loader = document.getElementById('global-loader');
-        loader.style.display = 'flex';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 1000);
-        
-        // Вешаем на все кнопки
-        document.querySelectorAll('button, a').forEach(el => {
-            el.addEventListener('click', function() {
-                if(this.tagName === 'A' || this.type === 'submit') {
-                    loader.style.display = 'flex';
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 1500);
-                }
-            });
-        });
-    });
-</script>
+    
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </body>
-
 </html>
+
 
 
