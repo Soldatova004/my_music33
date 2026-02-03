@@ -5,43 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог - Vinyl Store</title>
     <style>
-        /* ЛОКАЛЬНЫЕ СТИЛИ - НИКАКИХ ВНЕШНИХ ССЫЛОК */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* ВСЕ СТИЛИ ВНУТРИ ФАЙЛА - НИКАКИХ ВНЕШНИХ ССЫЛОК */
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
             background: #FFF0F5;
-            color: #333;
         }
         
         /* ШАПКА */
         .navbar {
             background: linear-gradient(135deg, #8B008B, #FF69B4);
-            padding: 1rem 2rem;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
         }
         
         .logo h1 {
-            color: white;
-            font-size: 1.5rem;
+            margin: 0;
+            font-size: 1.8rem;
         }
         
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            gap: 15px;
         }
         
         .nav-links a {
             color: white;
             text-decoration: none;
-            padding: 0.5rem 1rem;
+            padding: 8px 15px;
             border-radius: 5px;
         }
         
@@ -49,28 +46,35 @@
             background: rgba(255, 255, 255, 0.2);
         }
         
-        /* КАТАЛОГ */
+        /* ЗАГОЛОВОК КАТАЛОГА */
         .catalog-header {
             text-align: center;
-            padding: 2rem;
-            color: #8B008B;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #FF69B4, #8B008B);
+            color: white;
         }
         
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
+        .catalog-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        /* КОНТЕЙНЕР ТОВАРОВ */
+        .products-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
         
         /* КАРТОЧКА ТОВАРА */
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);
+            box-shadow: 0 5px 15px rgba(139, 0, 139, 0.15);
             transition: transform 0.3s;
         }
         
@@ -81,66 +85,105 @@
         .product-image {
             width: 100%;
             height: 250px;
-            object-fit: cover;
             background: #8B008B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
         }
         
         .product-info {
-            padding: 1.5rem;
+            padding: 20px;
         }
         
         .product-title {
             color: #8B008B;
-            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            margin: 0 0 10px 0;
+        }
+        
+        .product-description {
+            color: #666;
+            margin: 0 0 15px 0;
+            font-size: 0.95rem;
         }
         
         .product-price {
             color: #C71585;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            margin: 1rem 0;
+            margin: 0 0 15px 0;
         }
         
         .quantity-controls {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin: 1rem 0;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         .quantity-btn {
             background: #FF69B4;
             color: white;
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
-            cursor: pointer;
             font-size: 1.2rem;
+            cursor: pointer;
         }
         
-        .add-to-cart {
-            background: #8B008B;
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            padding: 8px;
+            border: 2px solid #FFE4E9;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #8B008B, #FF69B4);
             color: white;
             border: none;
-            padding: 0.8rem;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart-btn:hover {
+            background: linear-gradient(135deg, #FF69B4, #8B008B);
+        }
+        
+        /* ФУТЕР */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #8B008B;
+            color: white;
+            margin-top: 40px;
         }
         
         /* АДАПТИВНОСТЬ */
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+                gap: 15px;
             }
             
-            .products {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-container {
                 grid-template-columns: 1fr;
-                padding: 1rem;
+                padding: 20px;
             }
         }
     </style>
@@ -161,43 +204,253 @@
         </nav>
     </header>
 
-    <!-- КАТАЛОГ -->
+    <!-- ЗАГОЛОВОК -->
+    <section class="catalog-header">
+        <h1>📀 Каталог виниловых пластинок</h1>
+        <p>Выберите из нашей коллекции классики</p>
+    </section>
+
+    <!-- КАТАЛОГ ТОВАРОВ -->
     <main>
-        <div class="catalog-header">
-            <h1>📀 Все виниловые пластинки</h1>
-            <p>Выберите из нашей коллекции</p>
-        </div>
-        
-        <!-- КОНТЕЙНЕР ДЛЯ ТОВАРОВ -->
-        <div class="products" id="products-container">
-            <!-- ТОВАРЫ БУДУТ ЗАГРУЖЕНЫ ЧЕРЕЗ JS -->
-            <div style="text-align: center; padding: 3rem; grid-column: 1 / -1;">
-                <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-                <p style="margin-top: 20px; color: #666;">Загрузка каталога...</p>
-            </div>
+        <div class="products-container" id="products-container">
+            <!-- ТОВАРЫ БУДУТ ДОБАВЛЕНЫ ЧЕРЕЗ JAVASCRIPT -->
         </div>
     </main>
 
-    <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
-    <script src="auth.js"></script>
-    <script src="cart.js"></script>
-    <script src="main.js"></script>
-    
+    <!-- ФУТЕР -->
+    <footer>
+        <p>Vinyl Store &copy; 2024 | Магазин виниловых пластинок</p>
+        <p>Все права защищены</p>
+    </footer>
+
+    <!-- ПРОСТОЙ JAVASCRIPT ДЛЯ КАТАЛОГА -->
     <script>
-        // Анимация загрузки
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
+        // ===== ДАННЫЕ ТОВАРОВ =====
+        const products = [
+            {
+                id: 1,
+                name: "The Beatles - Abbey Road",
+                price: 3499,
+                image: "🎵",
+                description: "Легендарный альбом 1969 года, последняя совместная запись The Beatles",
+                genre: "Рок",
+                year: 1969,
+                color: "#8B008B"
+            },
+            {
+                id: 2,
+                name: "Pink Floyd - The Dark Side of the Moon",
+                price: 3999,
+                image: "🎵",
+                description: "Культовый прогрессив-рок альбом, один из самых продаваемых в истории",
+                genre: "Прогрессив-рок",
+                year: 1973,
+                color: "#FF69B4"
+            },
+            {
+                id: 3,
+                name: "Miles Davis - Kind of Blue",
+                price: 3299,
+                image: "🎵",
+                description: "Величайший джазовый альбом всех времен, эталон модального джаза",
+                genre: "Джаз",
+                year: 1959,
+                color: "#DB7093"
+            },
+            {
+                id: 4,
+                name: "Daft Punk - Random Access Memories",
+                price: 2899,
+                image: "🎵",
+                description: "Грэмми-альбом электронной музыки, современная классика",
+                genre: "Электроника",
+                year: 2013,
+                color: "#8B008B"
+            },
+            {
+                id: 5,
+                name: "Amy Winehouse - Back to Black",
+                price: 2799,
+                image: "🎵",
+                description: "Современная классика соула, посмертный шедевр",
+                genre: "Соул, R&B",
+                year: 2006,
+                color: "#FF69B4"
+            },
+            {
+                id: 6,
+                name: "Queen - A Night at the Opera",
+                price: 3699,
+                image: "🎵",
+                description: "Шедевр рок-музыки с легендарной 'Bohemian Rhapsody'",
+                genre: "Рок",
+                year: 1975,
+                color: "#DB7093"
             }
-        `;
-        document.head.appendChild(style);
+        ];
+
+        // ===== ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ТОВАРОВ =====
+        function renderProducts() {
+            console.log('🔄 Загружаем товары...');
+            
+            const container = document.getElementById('products-container');
+            if (!container) {
+                console.error('❌ Не найден контейнер для товаров!');
+                return;
+            }
+            
+            // Очищаем контейнер
+            container.innerHTML = '';
+            
+            // Добавляем каждый товар
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image" style="background: ${product.color};">
+                        ${product.image}
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <span style="background: #FFE4E9; color: ${product.color}; padding: 5px 10px; border-radius: 15px; font-size: 0.9rem;">
+                                ${product.genre}
+                            </span>
+                            <span style="color: #666;">${product.year} год</span>
+                        </div>
+                        <p class="product-price">${product.price} ₽</p>
+                        
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
+                            <input type="number" class="quantity-input" id="qty-${product.id}" value="1" min="1" max="10" readonly>
+                            <button class="quantity-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
+                        </div>
+                        
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            🛒 Добавить в корзину
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productCard);
+            });
+            
+            console.log('✅ Товары загружены:', products.length, 'шт.');
+        }
+
+        // ===== ФУНКЦИИ ДЛЯ КНОПОК =====
         
-        // Проверка загрузки
+        // Изменение количества
+        function updateQuantity(productId, change) {
+            const input = document.getElementById(`qty-${productId}`);
+            if (!input) return;
+            
+            let currentValue = parseInt(input.value) || 1;
+            let newValue = currentValue + change;
+            
+            // Ограничения: от 1 до 10
+            if (newValue < 1) newValue = 1;
+            if (newValue > 10) newValue = 10;
+            
+            input.value = newValue;
+        }
+        
+        // Добавление в корзину
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) {
+                alert('❌ Товар не найден');
+                return;
+            }
+            
+            const quantityInput = document.getElementById(`qty-${productId}`);
+            const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
+            
+            console.log('🛒 Добавляем в корзину:', product.name, quantity);
+            
+            // Используем существующую корзину или создаем простую
+            if (window.cart && typeof cart.addItem === 'function') {
+                cart.addItem(product, quantity);
+            } else {
+                // Простой вариант если cart.js не загружен
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity = (existingItem.quantity || 1) + quantity;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        quantity: quantity
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Обновляем счетчик
+                updateCartCount();
+                
+                alert(`✅ "${product.name}" добавлен в корзину!`);
+            }
+            
+            // Сбрасываем количество
+            if (quantityInput) {
+                quantityInput.value = 1;
+            }
+        }
+        
+        // Обновление счетчика корзины
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+        }
+        
+        // Обновление ссылки авторизации
+        function updateAuthLink() {
+            const authLink = document.getElementById('auth-link');
+            if (!authLink) return;
+            
+            // Проверяем есть ли пользователь в localStorage
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (currentUser) {
+                authLink.innerHTML = `👤 ${currentUser.name.split(' ')[0]}`;
+                authLink.href = 'dashboard.html';
+            } else {
+                authLink.innerHTML = '🔐 Войти';
+                authLink.href = 'login.html';
+            }
+        }
+
+        // ===== ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📋 Страница каталога загружена');
+            console.log('📄 Страница каталога загружена');
+            
+            // Загружаем товары
+            renderProducts();
+            
+            // Обновляем счетчик корзины
+            updateCartCount();
+            
+            // Обновляем ссылку авторизации
+            updateAuthLink();
+            
+            console.log('✅ Каталог готов к работе');
         });
+
+        // ===== ДЕЛАЕМ ФУНКЦИИ ДОСТУПНЫМИ ГЛОБАЛЬНО =====
+        window.renderProducts = renderProducts;
+        window.updateQuantity = updateQuantity;
+        window.addToCart = addToCart;
+        window.updateCartCount = updateCartCount;
     </script>
 </body>
 </html>
