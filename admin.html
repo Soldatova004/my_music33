@@ -3,198 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панель управления - Vinyl Store</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Админ-панель - Vinyl Store</title>
     <style>
-        .admin-tabs {
+        /* СТИЛИ ДЛЯ АДМИНКИ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #FFF0F5;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #8B008B, #FF69B4);
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+        }
+        
+        .admin-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--secondary-color);
+            border-bottom: 2px solid #FF69B4;
             padding-bottom: 10px;
         }
-        .admin-tab {
+        
+        .tab-btn {
             padding: 10px 20px;
             background: white;
-            border: 2px solid var(--secondary-color);
-            border-radius: 8px 8px 0 0;
+            border: 2px solid #FF69B4;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 600;
-            color: var(--primary-color);
-            transition: all 0.3s;
+            font-weight: bold;
+            color: #8B008B;
         }
-        .admin-tab.active {
-            background: var(--primary-color);
+        
+        .tab-btn.active {
+            background: #8B008B;
             color: white;
-            border-color: var(--primary-color);
+            border-color: #8B008B;
         }
+        
         .tab-content {
             display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
             background: white;
             padding: 20px;
             border-radius: 10px;
-            text-align: center;
             box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);
-            transition: transform 0.3s;
         }
-        .stat-card:hover {
-            transform: translateY(-5px);
+        
+        .tab-content.active {
+            display: block;
         }
-        .stat-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1rem;
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--dark-pink);
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #FFE4E9;
         }
-        .user-role-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
+        
+        th {
+            background: #8B008B;
+            color: white;
         }
-        .role-manager { background: #8B008B; color: white; }
-        .role-employee { background: #FF69B4; color: white; }
-        .role-customer { background: #DB7093; color: white; }
-        .order-status {
+        
+        .btn {
+            padding: 5px 10px;
+            background: #FF69B4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .status {
             padding: 3px 10px;
             border-radius: 15px;
-            font-size: 0.85em;
+            font-size: 0.9em;
             font-weight: bold;
         }
+        
         .status-pending { background: #FFEAA7; color: #E17055; }
         .status-processing { background: #74B9FF; color: #0984E3; }
         .status-shipped { background: #A29BFE; color: #6C5CE7; }
         .status-delivered { background: #55EFC4; color: #00B894; }
-        .order-details-btn {
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        .export-btn {
-            background: #00B894;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .search-box {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        .search-box input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #FFE4E9;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-        .search-box button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
+    <!-- ШАПКА -->
     <header>
         <nav class="navbar">
-            <div class="logo">
-                <h1><i class="fas fa-cog"></i> Панель управления Vinyl Store</h1>
+            <div>
+                <h1 style="margin: 0;">⚙️ Админ-панель Vinyl Store</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-store"></i> Магазин</a></li>
-                <li><a href="dashboard.html"><i class="fas fa-user"></i> Кабинет</a></li>
-                <li><a href="#" onclick="auth.logout()"><i class="fas fa-sign-out-alt"></i> Выйти</a></li>
+                <li><a href="index.html">🏠 Магазин</a></li>
+                <li><a href="dashboard.html">👤 Кабинет</a></li>
+                <li><a href="#" onclick="logout()">🚪 Выйти</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="admin-panel">
-        <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Панель управления</h2>
-        
-        <div class="admin-tabs">
-            <div class="admin-tab active" onclick="switchTab('stats')">Статистика</div>
-            <div class="admin-tab" onclick="switchTab('customers')">Клиенты (<span id="customers-count">0</span>)</div>
-            <div class="admin-tab" onclick="switchTab('orders')">Заказы (<span id="orders-count">0</span>)</div>
-            <div class="admin-tab" onclick="switchTab('products')">Товары</div>
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
+    <div class="admin-container">
+        <!-- ТАБЫ -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('customers')">👥 Клиенты</button>
+            <button class="tab-btn" onclick="showTab('orders')">📦 Все заказы</button>
+            <button class="tab-btn" onclick="showTab('stats')">📊 Статистика</button>
         </div>
         
-        <!-- Вкладка Статистика -->
-        <div id="stats-tab" class="tab-content active">
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <h3><i class="fas fa-users"></i> Всего клиентов</h3>
-                    <div class="stat-number" id="total-customers">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-shopping-cart"></i> Всего заказов</h3>
-                    <div class="stat-number" id="total-orders">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-ruble-sign"></i> Общая выручка</h3>
-                    <div class="stat-number" id="total-revenue">0</div><span> руб.</span>
-                </div>
-                <div class="stat-card">
-                    <h3><i class="fas fa-box"></i> Товаров продано</h3>
-                    <div class="stat-number" id="total-items">0</div>
-                </div>
-            </div>
-            
-            <div style="display: flex; gap: 15px; margin-top: 30px;">
-                <button class="export-btn" onclick="exportData('customers')">
-                    <i class="fas fa-file-csv"></i> Экспорт клиентов (CSV)
-                </button>
-                <button class="export-btn" onclick="exportData('orders')">
-                    <i class="fas fa-file-excel"></i> Экспорт заказов (CSV)
-                </button>
-                <button class="export-btn" onclick="generateReport()">
-                    <i class="fas fa-chart-bar"></i> Отчет по продажам
-                </button>
+        <!-- ВКЛАДКА КЛИЕНТЫ -->
+        <div id="customers-tab" class="tab-content active">
+            <h2>👥 Все клиенты</h2>
+            <div id="customers-list">
+                <!-- Список клиентов загрузится через JS -->
             </div>
         </div>
         
-        <!-- Вкладка Клиенты -->
-        <div id="customers-tab" class="tab-content">
-            <div class="search-box">
-                <input type="text" id="customer-search" placeholder="Поиск по имени, email или телефону..." 
-                       onkeyup="searchCustomers()">
-                <button onclick="searchCustomers()"><i class="fas fa-search"></i> Найти</button>
+        <!-- ВКЛАДКА ЗАКАЗЫ -->
+        <div id="orders-tab" class="tab-content">
+            <h2>📦 Все заказы</h2>
+            <div id="orders-list">
+                <!-- Список заказов загрузится через JS -->
             </div>
+        </div>
+        
+        <!-- ВКЛАДКА СТАТИСТИКА -->
+        <div id="stats-tab" class="tab-content">
+            <h2>📊 Статистика магазина</h2>
+            <div id="stats-content">
+                <!-- Статистика загрузится через JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
+    <script src="auth.js"></script>
+    <script>
+        // ===== ОСНОВНЫЕ ФУНКЦИИ =====
+        
+        // Проверка авторизации при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔐 Проверяем доступ...');
             
-            <table class="orders-table">
+            // Проверяем авторизацию
+            if (!auth.currentUser) {
+                alert('❌ Вы не авторизованы!');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Проверяем роль (только менеджер)
+            if (auth.currentUser.role !== 'manager') {
+                alert('❌ Доступ только для менеджера!');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            
+            console.log('✅ Менеджер авторизован:', auth.currentUser.name);
+            
+            // Загружаем данные
+            loadAllData();
+        });
+        
+        // Выход из системы
+        function logout() {
+            if (auth && auth.logout) {
+                auth.logout();
+            } else {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // Переключение вкладок
+        function showTab(tabName) {
+            // Скрываем все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показываем выбранную вкладку
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Перезагружаем данные для этой вкладки
+            if (tabName === 'customers') {
+                loadCustomers();
+            } else if (tabName === 'orders') {
+                loadAllOrders();
+            } else if (tabName === 'stats') {
+                loadStatistics();
+            }
+        }
+        
+        // ===== ЗАГРУЗКА ВСЕХ ДАННЫХ =====
+        function loadAllData() {
+            console.log('📥 Загружаем все данные...');
+            loadCustomers();
+            loadAllOrders();
+            loadStatistics();
+        }
+        
+        // ===== КЛИЕНТЫ =====
+        function loadCustomers() {
+            console.log('👥 Загружаем клиентов...');
+            
+            const users = auth.getUsers();
+            const customers = users.filter(user => 
+                user.role === 'customer' || !user.role
+            );
+            
+            console.log('Найдено клиентов:', customers.length);
+            
+            if (customers.length === 0) {
+                document.getElementById('customers-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <p style="font-size: 3rem;">👤</p>
+                        <h3>Клиентов пока нет</h3>
+                        <p>Клиенты появятся после регистрации</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<table>';
+            html += `
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -203,32 +266,86 @@
                         <th>Телефон</th>
                         <th>Дата регистрации</th>
                         <th>Заказов</th>
-                        <th>Сумма заказов</th>
-                        <th>Роль</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
-                <tbody id="customers-list">
-                    <!-- Список клиентов загружается через JS -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Вкладка Заказы -->
-        <div id="orders-tab" class="tab-content">
-            <div class="search-box">
-                <input type="text" id="order-search" placeholder="Поиск по ID заказа или имени клиента..." 
-                       onkeyup="searchOrders()">
-                <select id="order-status-filter" onchange="searchOrders()" style="padding: 10px; border: 2px solid #FFE4E9; border-radius: 8px;">
-                    <option value="">Все статусы</option>
-                    <option value="pending">В обработке</option>
-                    <option value="processing">Собирается</option>
-                    <option value="shipped">Отправлен</option>
-                    <option value="delivered">Доставлен</option>
-                </select>
-            </div>
+                <tbody>
+            `;
             
-            <table class="orders-table">
+            customers.forEach(customer => {
+                const orderCount = customer.orders ? customer.orders.length : 0;
+                const totalSpent = customer.orders ? 
+                    customer.orders.reduce((sum, order) => sum + (order.total || 0), 0) : 0;
+                
+                html += `
+                    <tr>
+                        <td>${customer.id || 'Н/Д'}</td>
+                        <td><strong>${customer.name}</strong></td>
+                        <td>${customer.email}</td>
+                        <td>${customer.phone || 'Не указан'}</td>
+                        <td>${new Date(customer.registrationDate || Date.now()).toLocaleDateString()}</td>
+                        <td>
+                            <span style="color: #8B008B; font-weight: bold;">${orderCount}</span>
+                            <br>
+                            <small>${totalSpent.toFixed(2)} ₽</small>
+                        </td>
+                        <td>
+                            <button class="btn" onclick="viewCustomerOrders(${customer.id})">
+                                👁️ Заказы
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            document.getElementById('customers-list').innerHTML = html;
+        }
+        
+        // ===== ВСЕ ЗАКАЗЫ =====
+        function loadAllOrders() {
+            console.log('📦 Загружаем все заказы...');
+            
+            const users = auth.getUsers();
+            let allOrders = [];
+            
+            // Собираем все заказы всех пользователей
+            users.forEach(user => {
+                if (user.orders && user.orders.length > 0) {
+                    user.orders.forEach(order => {
+                        allOrders.push({
+                            ...order,
+                            customerName: user.name,
+                            customerEmail: user.email,
+                            customerPhone: user.phone,
+                            customerId: user.id
+                        });
+                    });
+                }
+            });
+            
+            console.log('Всего заказов:', allOrders.length);
+            
+            if (allOrders.length === 0) {
+                document.getElementById('orders-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <p style="font-size: 3rem;">📦</p>
+                        <h3>Заказов пока нет</h3>
+                        <p>Заказы появятся после покупок</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Сортируем по дате (новые сначала)
+            allOrders.sort((a, b) => {
+                const dateA = a.date ? new Date(a.date) : new Date(a.id || 0);
+                const dateB = b.date ? new Date(b.date) : new Date(b.id || 0);
+                return dateB - dateA;
+            });
+            
+            let html = '<table>';
+            html += `
                 <thead>
                     <tr>
                         <th>ID заказа</th>
@@ -236,687 +353,420 @@
                         <th>Клиент</th>
                         <th>Телефон</th>
                         <th>Товары</th>
-                        <th>Кол-во</th>
                         <th>Сумма</th>
                         <th>Статус</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
-                <tbody id="orders-list">
-                    <!-- Список заказов загружается через JS -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Вкладка Товары -->
-        <div id="products-tab" class="tab-content">
-            <h3>Популярные товары</h3>
-            <table class="orders-table">
-                <thead>
+                <tbody>
+            `;
+            
+            allOrders.forEach(order => {
+                // Подсчитываем общее количество товаров
+                const totalItems = order.items ? 
+                    order.items.reduce((sum, item) => sum + (item.quantity || 1), 0) : 0;
+                
+                // Получаем статус
+                const statusText = getStatusText(order.status);
+                const statusClass = getStatusClass(order.status);
+                
+                // Форматируем список товаров (первые 2)
+                let itemsText = 'Нет данных';
+                if (order.items && order.items.length > 0) {
+                    const firstItems = order.items.slice(0, 2);
+                    itemsText = firstItems.map(item => 
+                        `${item.name} (${item.quantity || 1} шт.)`
+                    ).join(', ');
+                    
+                    if (order.items.length > 2) {
+                        itemsText += ` +${order.items.length - 2} еще`;
+                    }
+                }
+                
+                html += `
                     <tr>
-                        <th>ID</th>
-                        <th>Название пластинки</th>
-                        <th>Жанр</th>
-                        <th>Цена</th>
-                        <th>Продано</th>
-                        <th>Выручка</th>
-                        <th>Рейтинг</th>
+                        <td><strong>#${order.id}</strong></td>
+                        <td>${new Date(order.date || order.id || Date.now()).toLocaleDateString()}</td>
+                        <td>${order.customerName}</td>
+                        <td>${order.customerPhone || 'Не указан'}</td>
+                        <td title="${order.items ? order.items.map(i => i.name).join(', ') : ''}">
+                            ${itemsText}
+                        </td>
+                        <td><strong>${order.total ? order.total.toFixed(2) : '0.00'} ₽</strong></td>
+                        <td>
+                            <span class="status ${statusClass}">${statusText}</span>
+                            <br>
+                            <select onchange="updateOrderStatus(${order.id}, this.value)" style="margin-top: 5px; padding: 3px; font-size: 0.9em;">
+                                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>В обработке</option>
+                                <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Собирается</option>
+                                <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Отправлен</option>
+                                <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Доставлен</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn" onclick="viewOrderDetails(${order.id})">
+                                🔍 Детали
+                            </button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody id="products-stats">
-                    <!-- Статистика по товарам -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Модальное окно для деталей заказа -->
-        <div id="order-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
-            <div style="background: white; padding: 30px; border-radius: 15px; max-width: 700px; width: 90%; max-height: 80vh; overflow-y: auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3 style="color: var(--primary-color);">Детали заказа #<span id="modal-order-id"></span></h3>
-                    <button onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">×</button>
-                </div>
-                <div id="order-details-content">
-                    <!-- Детали заказа загружаются здесь -->
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script src="auth.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!auth.currentUser || (auth.currentUser.role !== 'manager' && auth.currentUser.role !== 'employee')) {
-                alert('Доступ запрещен. Только для персонала магазина.');
-                window.location.href = 'index.html';
-                return;
-            }
-            
-            loadAdminData();
-        });
-        
-        function switchTab(tabName) {
-            // Скрыть все вкладки
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.classList.remove('active');
+                `;
             });
             
-            // Показать выбранную вкладку
-            document.getElementById(`${tabName}-tab`).classList.add('active');
-            event.target.classList.add('active');
-            
-            // Если переключились на заказы или клиентов - обновляем данные
-            if (tabName === 'orders' || tabName === 'customers') {
-                loadAdminData();
-            }
+            html += '</tbody></table>';
+            document.getElementById('orders-list').innerHTML = html;
         }
         
-        function loadAdminData() {
+        // ===== СТАТИСТИКА =====
+        function loadStatistics() {
+            console.log('📊 Загружаем статистику...');
+            
             const users = auth.getUsers();
             const customers = users.filter(u => u.role === 'customer' || !u.role);
-            const employees = users.filter(u => u.role === 'employee');
-            const managers = users.filter(u => u.role === 'manager');
             
             // Собираем все заказы
             let allOrders = [];
             let totalRevenue = 0;
-            let totalItemsSold = 0;
-            
-            users.forEach(user => {
-                if (user.orders && user.orders.length > 0) {
-                    user.orders.forEach(order => {
-                        const orderWithUser = {
-                            ...order,
-                            userName: user.name,
-                            userEmail: user.email,
-                            userPhone: user.phone,
-                            userId: user.id
-                        };
-                        allOrders.push(orderWithUser);
-                        
-                        // Считаем статистику
-                        totalRevenue += order.total || 0;
-                        if (order.items) {
-                            totalItemsSold += order.items.reduce((sum, item) => sum + item.quantity, 0);
-                        }
-                    });
-                }
-            });
-            
-            // Статистика
-            document.getElementById('total-customers').textContent = customers.length;
-            document.getElementById('customers-count').textContent = customers.length;
-            document.getElementById('total-orders').textContent = allOrders.length;
-            document.getElementById('orders-count').textContent = allOrders.length;
-            document.getElementById('total-revenue').textContent = totalRevenue.toFixed(2);
-            document.getElementById('total-items').textContent = totalItemsSold;
-            
-            // Список клиентов (покупателей)
-            let customersHtml = '';
-            customers.forEach(customer => {
-                const customerOrders = customer.orders || [];
-                const totalSpent = customerOrders.reduce((sum, order) => sum + (order.total || 0), 0);
-                
-                customersHtml += `
-                    <tr>
-                        <td>${customer.id}</td>
-                        <td><strong>${customer.name}</strong></td>
-                        <td>${customer.email}</td>
-                        <td>${customer.phone || 'Не указан'}</td>
-                        <td>${new Date(customer.registrationDate).toLocaleDateString()}</td>
-                        <td>${customerOrders.length}</td>
-                        <td>${totalSpent.toFixed(2)} руб.</td>
-                        <td><span class="user-role-badge role-customer">Покупатель</span></td>
-                        <td>
-                            <button class="order-details-btn" onclick="viewCustomerOrders(${customer.id})">
-                                <i class="fas fa-eye"></i> Заказы
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('customers-list').innerHTML = customersHtml || '<tr><td colspan="9" style="text-align: center;">Покупателей пока нет</td></tr>';
-            
-            // Список заказов
-            renderOrdersTable(allOrders);
-            
-            // Статистика по товарам
-            renderProductsStats(allOrders);
-        }
-        
-        function renderOrdersTable(orders) {
-            let ordersHtml = '';
-            
-            if (orders.length === 0) {
-                ordersHtml = '<tr><td colspan="9" style="text-align: center;">Заказов пока нет</td></tr>';
-            } else {
-                // Сортируем по дате (новые первые)
-                orders.sort((a, b) => new Date(b.date || b.id) - new Date(a.date || a.id));
-                
-                orders.forEach(order => {
-                    // Подсчитываем общее количество товаров
-                    const totalItems = order.items ? order.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
-                    
-                    // Статус заказа
-                    const statusText = {
-                        'pending': 'В обработке',
-                        'processing': 'Собирается',
-                        'shipped': 'Отправлен',
-                        'delivered': 'Доставлен'
-                    }[order.status] || order.status;
-                    
-                    const statusClass = {
-                        'pending': 'status-pending',
-                        'processing': 'status-processing',
-                        'shipped': 'status-shipped',
-                        'delivered': 'status-delivered'
-                    }[order.status] || 'status-pending';
-                    
-                    // Список товаров (первые 2)
-                    const itemNames = order.items ? 
-                        order.items.slice(0, 2).map(item => item.name).join(', ') + 
-                        (order.items.length > 2 ? ` +${order.items.length - 2} еще` : '') : 
-                        'Нет данных';
-                    
-                    ordersHtml += `
-                        <tr>
-                            <td><strong>#${order.id}</strong></td>
-                            <td>${new Date(order.date || order.id).toLocaleDateString()}</td>
-                            <td>${order.userName}</td>
-                            <td>${order.userPhone || 'Не указан'}</td>
-                            <td title="${order.items ? order.items.map(i => i.name).join(', ') : ''}">
-                                ${itemNames}
-                            </td>
-                            <td>${totalItems} шт.</td>
-                            <td><strong>${order.total ? order.total.toFixed(2) : '0.00'} руб.</strong></td>
-                            <td>
-                                <span class="order-status ${statusClass}">${statusText}</span>
-                                <select onchange="updateOrderStatus(${order.id}, this.value)" 
-                                        style="margin-left: 5px; padding: 3px; font-size: 0.8em;">
-                                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>В обработке</option>
-                                    <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Собирается</option>
-                                    <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Отправлен</option>
-                                    <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Доставлен</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button class="order-details-btn" onclick="viewOrderDetails(${order.id})">
-                                    <i class="fas fa-list"></i> Детали
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            }
-            
-            document.getElementById('orders-list').innerHTML = ordersHtml;
-        }
-        
-        function renderProductsStats(allOrders) {
-            // Анализируем продажи по товарам
-            const productStats = {};
-            
-            allOrders.forEach(order => {
-                if (order.items) {
-                    order.items.forEach(item => {
-                        if (!productStats[item.id]) {
-                            productStats[item.id] = {
-                                id: item.id,
-                                name: item.name,
-                                genre: item.genre || 'Не указан',
-                                price: item.price,
-                                sold: 0,
-                                revenue: 0,
-                                rating: item.rating || 5
-                            };
-                        }
-                        productStats[item.id].sold += item.quantity;
-                        productStats[item.id].revenue += item.price * item.quantity;
-                    });
-                }
-            });
-            
-            // Преобразуем в массив и сортируем по продажам
-            const productsArray = Object.values(productStats);
-            productsArray.sort((a, b) => b.sold - a.sold);
-            
-            let productsHtml = '';
-            if (productsArray.length === 0) {
-                productsHtml = '<tr><td colspan="7" style="text-align: center;">Нет данных о продажах</td></tr>';
-            } else {
-                productsArray.forEach(product => {
-                    productsHtml += `
-                        <tr>
-                            <td>${product.id}</td>
-                            <td><strong>${product.name}</strong></td>
-                            <td>${product.genre}</td>
-                            <td>${product.price} руб.</td>
-                            <td>${product.sold} шт.</td>
-                            <td><strong>${product.revenue.toFixed(2)} руб.</strong></td>
-                            <td>
-                                <div style="color: #FFD700;">
-                                    ${'★'.repeat(product.rating)}${'☆'.repeat(5-product.rating)}
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-            }
-            
-            document.getElementById('products-stats').innerHTML = productsHtml;
-        }
-        
-        function searchCustomers() {
-            const searchTerm = document.getElementById('customer-search').value.toLowerCase();
-            const users = auth.getUsers();
-            const customers = users.filter(u => u.role === 'customer' || !u.role);
-            
-            if (!searchTerm) {
-                loadAdminData();
-                return;
-            }
-            
-            const filtered = customers.filter(customer => 
-                customer.name.toLowerCase().includes(searchTerm) ||
-                customer.email.toLowerCase().includes(searchTerm) ||
-                (customer.phone && customer.phone.toLowerCase().includes(searchTerm))
-            );
-            
-            let customersHtml = '';
-            filtered.forEach(customer => {
-                const customerOrders = customer.orders || [];
-                const totalSpent = customerOrders.reduce((sum, order) => sum + (order.total || 0), 0);
-                
-                customersHtml += `
-                    <tr>
-                        <td>${customer.id}</td>
-                        <td><strong>${customer.name}</strong></td>
-                        <td>${customer.email}</td>
-                        <td>${customer.phone || 'Не указан'}</td>
-                        <td>${new Date(customer.registrationDate).toLocaleDateString()}</td>
-                        <td>${customerOrders.length}</td>
-                        <td>${totalSpent.toFixed(2)} руб.</td>
-                        <td><span class="user-role-badge role-customer">Покупатель</span></td>
-                        <td>
-                            <button class="order-details-btn" onclick="viewCustomerOrders(${customer.id})">
-                                <i class="fas fa-eye"></i> Заказы
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            document.getElementById('customers-list').innerHTML = customersHtml || 
-                '<tr><td colspan="9" style="text-align: center;">Клиенты не найдены</td></tr>';
-        }
-        
-        function searchOrders() {
-            const searchTerm = document.getElementById('order-search').value.toLowerCase();
-            const statusFilter = document.getElementById('order-status-filter').value;
-            
-            const users = auth.getUsers();
-            let allOrders = [];
-            
-            users.forEach(user => {
-                if (user.orders && user.orders.length > 0) {
-                    user.orders.forEach(order => {
-                        allOrders.push({
-                            ...order,
-                            userName: user.name,
-                            userEmail: user.email,
-                            userPhone: user.phone,
-                            userId: user.id
-                        });
-                    });
-                }
-            });
-            
-            let filteredOrders = allOrders;
-            
-            if (searchTerm) {
-                filteredOrders = filteredOrders.filter(order => 
-                    order.id.toString().includes(searchTerm) ||
-                    order.userName.toLowerCase().includes(searchTerm) ||
-                    (order.userPhone && order.userPhone.toLowerCase().includes(searchTerm))
-                );
-            }
-            
-            if (statusFilter) {
-                filteredOrders = filteredOrders.filter(order => order.status === statusFilter);
-            }
-            
-            renderOrdersTable(filteredOrders);
-        }
-        
-        function updateOrderStatus(orderId, newStatus) {
-            const users = auth.getUsers();
-            let orderFound = false;
-            
-            users.forEach(user => {
-                if (user.orders) {
-                    const orderIndex = user.orders.findIndex(o => o.id === orderId);
-                    if (orderIndex !== -1) {
-                        user.orders[orderIndex].status = newStatus;
-                        orderFound = true;
-                    }
-                }
-            });
-            
-            if (orderFound) {
-                localStorage.setItem('users', JSON.stringify(users));
-                
-                // Обновляем статус в таблице
-                const statusElement = event.target.closest('td').querySelector('.order-status');
-                const statusText = {
-                    'pending': 'В обработке',
-                    'processing': 'Собирается',
-                    'shipped': 'Отправлен',
-                    'delivered': 'Доставлен'
-                }[newStatus] || newStatus;
-                
-                const statusClass = {
-                    'pending': 'status-pending',
-                    'processing': 'status-processing',
-                    'shipped': 'status-shipped',
-                    'delivered': 'status-delivered'
-                }[newStatus] || 'status-pending';
-                
-                statusElement.textContent = statusText;
-                statusElement.className = `order-status ${statusClass}`;
-                
-                alert(`Статус заказа #${orderId} изменен на: ${statusText}`);
-            }
-        }
-        
-        function viewOrderDetails(orderId) {
-            const users = auth.getUsers();
-            let orderDetails = null;
-            let customerInfo = null;
-            
-            // Находим заказ и информацию о клиенте
-            users.forEach(user => {
-                if (user.orders) {
-                    const order = user.orders.find(o => o.id === orderId);
-                    if (order) {
-                        orderDetails = order;
-                        customerInfo = {
-                            name: user.name,
-                            email: user.email,
-                            phone: user.phone,
-                            registrationDate: user.registrationDate
-                        };
-                    }
-                }
-            });
-            
-            if (!orderDetails) {
-                alert('Заказ не найден');
-                return;
-            }
-            
-            // Заполняем модальное окно
-            document.getElementById('modal-order-id').textContent = orderId;
-            
-            const statusText = {
-                'pending': 'В обработке',
-                'processing': 'Собирается', 
-                'shipped': 'Отправлен',
-                'delivered': 'Доставлен'
-            }[orderDetails.status] || orderDetails.status;
-            
-            const statusClass = {
-                'pending': 'status-pending',
-                'processing': 'status-processing',
-                'shipped': 'status-shipped',
-                'delivered': 'status-delivered'
-            }[orderDetails.status] || 'status-pending';
-            
-            let itemsHtml = '';
-            if (orderDetails.items && orderDetails.items.length > 0) {
-                itemsHtml = orderDetails.items.map(item => `
-                    <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
-                        <div>
-                            <strong>${item.name}</strong><br>
-                            <small>Артикул: ${item.id}</small>
-                        </div>
-                        <div style="text-align: right;">
-                            ${item.quantity} × ${item.price} руб.<br>
-                            <strong>${(item.quantity * item.price).toFixed(2)} руб.</strong>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            document.getElementById('order-details-content').innerHTML = `
-                <div style="margin-bottom: 20px;">
-                    <h4 style="color: var(--primary-color);"><i class="fas fa-user"></i> Информация о клиенте</h4>
-                    <p><strong>ФИО:</strong> ${customerInfo.name}</p>
-                    <p><strong>Email:</strong> ${customerInfo.email}</p>
-                    <p><strong>Телефон:</strong> ${customerInfo.phone || 'Не указан'}</p>
-                    <p><strong>Дата регистрации:</strong> ${new Date(customerInfo.registrationDate).toLocaleDateString()}</p>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <h4 style="color: var(--primary-color);"><i class="fas fa-info-circle"></i> Информация о заказе</h4>
-                    <p><strong>Дата заказа:</strong> ${new Date(orderDetails.date || orderId).toLocaleString()}</p>
-                    <p><strong>Статус:</strong> <span class="order-status ${statusClass}">${statusText}</span></p>
-                    <p><strong>ID заказа:</strong> #${orderId}</p>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <h4 style="color: var(--primary-color);"><i class="fas fa-box"></i> Состав заказа</h4>
-                    ${itemsHtml || '<p>Товары не указаны</p>'}
-                </div>
-                
-                <div style="background: #FFF9FD; padding: 15px; border-radius: 10px; border: 2px solid var(--secondary-color);">
-                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem;">
-                        <strong>ИТОГО:</strong>
-                        <strong style="color: var(--dark-pink);">${orderDetails.total ? orderDetails.total.toFixed(2) : '0.00'} руб.</strong>
-                    </div>
-                </div>
-            `;
-            
-            // Показываем модальное окно
-            document.getElementById('order-modal').style.display = 'flex';
-        }
-        
-        function viewCustomerOrders(customerId) {
-            const users = auth.getUsers();
-            const customer = users.find(u => u.id === customerId);
-            
-            if (!customer || !customer.orders || customer.orders.length === 0) {
-                alert('У этого клиента пока нет заказов');
-                return;
-            }
-            
-            // Переключаемся на вкладку заказов
-            switchTab('orders');
-            
-            // Фильтруем заказы только этого клиента
-            const allOrders = [];
-            if (customer.orders) {
-                customer.orders.forEach(order => {
-                    allOrders.push({
-                        ...order,
-                        userName: customer.name,
-                        userEmail: customer.email,
-                        userPhone: customer.phone,
-                        userId: customer.id
-                    });
-                });
-            }
-            
-            renderOrdersTable(allOrders);
-            
-            // Показываем сообщение
-            setTimeout(() => {
-                alert(`Показаны заказы клиента: ${customer.name}\nВсего заказов: ${customer.orders.length}`);
-            }, 100);
-        }
-        
-        function closeModal() {
-            document.getElementById('order-modal').style.display = 'none';
-        }
-        
-        function exportData(type) {
-            const users = auth.getUsers();
-            
-            if (type === 'customers') {
-                const customers = users.filter(u => u.role === 'customer' || !u.role);
-                let csvContent = "data:text/csv;charset=utf-8,ID;ФИО;Email;Телефон;Дата регистрации;Кол-во заказов;Сумма заказов\n";
-                
-                customers.forEach(customer => {
-                    const orders = customer.orders || [];
-                    const totalSpent = orders.reduce((sum, order) => sum + (order.total || 0), 0);
-                    
-                    csvContent += `${customer.id};"${customer.name}";${customer.email};${customer.phone || ''};` +
-                                 `${new Date(customer.registrationDate).toLocaleDateString()};` +
-                                 `${orders.length};${totalSpent.toFixed(2)}\n`;
-                });
-                
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "customers.csv");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-            } else if (type === 'orders') {
-                let allOrders = [];
-                users.forEach(user => {
-                    if (user.orders) {
-                        user.orders.forEach(order => {
-                            allOrders.push({
-                                ...order,
-                                userName: user.name,
-                                userEmail: user.email,
-                                userPhone: user.phone
-                            });
-                        });
-                    }
-                });
-                
-                let csvContent = "data:text/csv;charset=utf-8,ID заказа;Дата;Клиент;Email;Телефон;Статус;Сумма;Товары\n";
-                
-                allOrders.forEach(order => {
-                    const items = order.items ? order.items.map(i => `${i.name} (${i.quantity} шт.)`).join(', ') : '';
-                    csvContent += `${order.id};${new Date(order.date || order.id).toLocaleDateString()};` +
-                                 `"${order.userName}";${order.userEmail};${order.userPhone || ''};` +
-                                 `${order.status || 'pending'};${order.total || 0};"${items}"\n`;
-                });
-                
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "orders.csv");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-            
-            alert(`Данные экспортированы в ${type === 'customers' ? 'customers.csv' : 'orders.csv'}`);
-        }
-        
-        function generateReport() {
-            const users = auth.getUsers();
-            const customers = users.filter(u => u.role === 'customer' || !u.role);
-            let allOrders = [];
-            let totalRevenue = 0;
+            let totalItems = 0;
             
             users.forEach(user => {
                 if (user.orders) {
                     allOrders = [...allOrders, ...user.orders];
                     user.orders.forEach(order => {
                         totalRevenue += order.total || 0;
+                        if (order.items) {
+                            totalItems += order.items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                        }
                     });
                 }
             });
             
-            const report = `
-                ОТЧЕТ О ПРОДАЖАХ - VINYL STORE
-                Дата: ${new Date().toLocaleString()}
+            // Статусы заказов
+            const statusCounts = {
+                pending: allOrders.filter(o => o.status === 'pending').length,
+                processing: allOrders.filter(o => o.status === 'processing').length,
+                shipped: allOrders.filter(o => o.status === 'shipped').length,
+                delivered: allOrders.filter(o => o.status === 'delivered').length
+            };
+            
+            const html = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #8B008B;">
+                        <h3 style="color: #8B008B; margin-top: 0;">👥 Клиенты</h3>
+                        <p style="font-size: 2.5rem; font-weight: bold; color: #FF69B4; margin: 10px 0;">${customers.length}</p>
+                        <p>Всего зарегистрировано</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #FF69B4;">
+                        <h3 style="color: #8B008B; margin-top: 0;">📦 Заказы</h3>
+                        <p style="font-size: 2.5rem; font-weight: bold; color: #DB7093; margin: 10px 0;">${allOrders.length}</p>
+                        <p>Всего выполнено</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #DB7093;">
+                        <h3 style="color: #8B008B; margin-top: 0;">💰 Выручка</h3>
+                        <p style="font-size: 2.5rem; font-weight: bold; color: #8B008B; margin: 10px 0;">${totalRevenue.toFixed(2)} ₽</p>
+                        <p>Общая сумма</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #C71585;">
+                        <h3 style="color: #8B008B; margin-top: 0;">🎵 Товары</h3>
+                        <p style="font-size: 2.5rem; font-weight: bold; color: #C71585; margin: 10px 0;">${totalItems}</p>
+                        <p>Всего продано</p>
+                    </div>
+                </div>
                 
-                ОБЩАЯ СТАТИСТИКА:
-                • Всего клиентов: ${customers.length}
-                • Всего заказов: ${allOrders.length}
-                • Общая выручка: ${totalRevenue.toFixed(2)} руб.
+                <div style="margin-top: 30px;">
+                    <h3>📈 Статусы заказов</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="background: #FFEAA7; padding: 15px; border-radius: 8px;">
+                            <strong>⏳ В обработке</strong>
+                            <p style="font-size: 1.5rem; margin: 5px 0;">${statusCounts.pending}</p>
+                        </div>
+                        <div style="background: #74B9FF; padding: 15px; border-radius: 8px;">
+                            <strong>📦 Собирается</strong>
+                            <p style="font-size: 1.5rem; margin: 5px 0;">${statusCounts.processing}</p>
+                        </div>
+                        <div style="background: #A29BFE; padding: 15px; border-radius: 8px;">
+                            <strong>🚚 Отправлен</strong>
+                            <p style="font-size: 1.5rem; margin: 5px 0;">${statusCounts.shipped}</p>
+                        </div>
+                        <div style="background: #55EFC4; padding: 15px; border-radius: 8px;">
+                            <strong>✅ Доставлен</strong>
+                            <p style="font-size: 1.5rem; margin: 5px 0;">${statusCounts.delivered}</p>
+                        </div>
+                    </div>
+                </div>
                 
-                СТАТУСЫ ЗАКАЗОВ:
-                • В обработке: ${allOrders.filter(o => o.status === 'pending').length}
-                • Собирается: ${allOrders.filter(o => o.status === 'processing').length}
-                • Отправлено: ${allOrders.filter(o => o.status === 'shipped').length}
-                • Доставлено: ${allOrders.filter(o => o.status === 'delivered').length}
-                
-                ТОП-5 КЛИЕНТОВ:
-                ${customers
-                    .map(c => ({
-                        name: c.name,
-                        orders: c.orders ? c.orders.length : 0,
-                        spent: c.orders ? c.orders.reduce((sum, o) => sum + (o.total || 0), 0) : 0
-                    }))
-                    .sort((a, b) => b.spent - a.spent)
-                    .slice(0, 5)
-                    .map((c, i) => `${i+1}. ${c.name} - ${c.orders} заказов, ${c.spent.toFixed(2)} руб.`)
-                    .join('\n')}
-                
-                === КОНЕЦ ОТЧЕТА ===
+                <div style="margin-top: 30px;">
+                    <button class="btn" onclick="exportData()" style="padding: 10px 20px; background: #00B894;">
+                        📥 Экспорт данных
+                    </button>
+                </div>
             `;
             
-            alert(report);
+            document.getElementById('stats-content').innerHTML = html;
         }
         
-        // Закрытие модального окна при клике вне его
-        document.getElementById('order-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
+        // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+        function getStatusText(status) {
+            switch(status) {
+                case 'pending': return 'В обработке';
+                case 'processing': return 'Собирается';
+                case 'shipped': return 'Отправлен';
+                case 'delivered': return 'Доставлен';
+                default: return 'В обработке';
             }
-        });
-  <script src="optimize.js"></script>
-    <!-- Индикатор загрузки -->
-<div id="global-loader" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="text-align: center;">
-        <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-        <p style="margin-top: 20px; color: #8B008B; font-weight: bold;">Загрузка...</p>
-    </div>
-</div>
-
-<style>
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-</style>
-
-<script>
-    // Показывать индикатор при действиях
-    document.addEventListener('DOMContentLoaded', function() {
-        // Показываем на 1 секунду при загрузке
-        const loader = document.getElementById('global-loader');
-        loader.style.display = 'flex';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 1000);
+        }
         
-        // Вешаем на все кнопки
-        document.querySelectorAll('button, a').forEach(el => {
-            el.addEventListener('click', function() {
-                if(this.tagName === 'A' || this.type === 'submit') {
-                    loader.style.display = 'flex';
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 1500);
+        function getStatusClass(status) {
+            switch(status) {
+                case 'pending': return 'status-pending';
+                case 'processing': return 'status-processing';
+                case 'shipped': return 'status-shipped';
+                case 'delivered': return 'status-delivered';
+                default: return 'status-pending';
+            }
+        }
+        
+        // ===== ФУНКЦИИ ДЛЯ КНОПОК =====
+        
+        // Просмотр заказов клиента
+        function viewCustomerOrders(customerId) {
+            console.log('👀 Просматриваем заказы клиента:', customerId);
+            
+            const users = auth.getUsers();
+            const customer = users.find(u => u.id === customerId);
+            
+            if (!customer) {
+                alert('❌ Клиент не найден');
+                return;
+            }
+            
+            if (!customer.orders || customer.orders.length === 0) {
+                alert(`📭 У клиента ${customer.name} пока нет заказов`);
+                return;
+            }
+            
+            // Переключаемся на вкладку заказов
+            showTab('orders');
+            
+            // Фильтруем заказы только этого клиента
+            setTimeout(() => {
+                const filteredOrders = customer.orders.map(order => ({
+                    ...order,
+                    customerName: customer.name,
+                    customerEmail: customer.email,
+                    customerPhone: customer.phone,
+                    customerId: customer.id
+                }));
+                
+                // Обновляем таблицу
+                let html = '<h3>📋 Заказы клиента: ' + customer.name + '</h3>';
+                html += '<button class="btn" onclick="loadAllOrders()" style="margin-bottom: 15px;">← Все заказы</button>';
+                html += '<table>';
+                html += `
+                    <thead>
+                        <tr>
+                            <th>ID заказа</th>
+                            <th>Дата</th>
+                            <th>Товары</th>
+                            <th>Сумма</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                
+                filteredOrders.forEach(order => {
+                    const totalItems = order.items ? 
+                        order.items.reduce((sum, item) => sum + (item.quantity || 1), 0) : 0;
+                    
+                    html += `
+                        <tr>
+                            <td><strong>#${order.id}</strong></td>
+                            <td>${new Date(order.date || order.id || Date.now()).toLocaleDateString()}</td>
+                            <td>${totalItems} шт.</td>
+                            <td><strong>${order.total ? order.total.toFixed(2) : '0.00'} ₽</strong></td>
+                            <td><span class="status ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></td>
+                            <td>
+                                <button class="btn" onclick="viewOrderDetails(${order.id})">
+                                    🔍 Детали
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                document.getElementById('orders-list').innerHTML = html;
+            }, 100);
+        }
+        
+        // Просмотр деталей заказа
+        function viewOrderDetails(orderId) {
+            console.log('🔍 Детали заказа #' + orderId);
+            
+            const users = auth.getUsers();
+            let order = null;
+            let customer = null;
+            
+            // Ищем заказ среди всех пользователей
+            for (const user of users) {
+                if (user.orders) {
+                    const foundOrder = user.orders.find(o => o.id === orderId);
+                    if (foundOrder) {
+                        order = foundOrder;
+                        customer = user;
+                        break;
+                    }
+                }
+            }
+            
+            if (!order || !customer) {
+                alert('❌ Заказ не найден');
+                return;
+            }
+            
+            // Создаем модальное окно
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            
+            // Подсчитываем товары
+            let itemsHtml = '';
+            if (order.items && order.items.length > 0) {
+                itemsHtml = order.items.map(item => `
+                    <tr>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity || 1} шт.</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">${item.price || 0} ₽</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">
+                            ${((item.quantity || 1) * (item.price || 0)).toFixed(2)} ₽
+                        </td>
+                    </tr>
+                `).join('');
+            } else {
+                itemsHtml = '<tr><td colspan="4" style="padding: 20px; text-align: center;">Товары не указаны</td></tr>';
+            }
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 700px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: #8B008B; margin: 0;">📦 Заказ #${orderId}</h3>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">×</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #FFF9FD; border-radius: 10px;">
+                        <h4 style="color: #8B008B; margin-top: 0;">👤 Информация о клиенте</h4>
+                        <p><strong>ФИО:</strong> ${customer.name}</p>
+                        <p><strong>Email:</strong> ${customer.email}</p>
+                        <p><strong>Телефон:</strong> ${customer.phone || 'Не указан'}</p>
+                        <p><strong>Дата регистрации:</strong> ${new Date(customer.registrationDate || Date.now()).toLocaleDateString()}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>📅 Дата заказа:</strong> ${new Date(order.date || orderId || Date.now()).toLocaleString()}</p>
+                        <p><strong>🎯 Статус:</strong> <span class="status ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></p>
+                    </div>
+                    
+                    <h4 style="color: #8B008B;">🛒 Состав заказа</h4>
+                    <div style="overflow-x: auto; margin-bottom: 20px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: #FFF0F5;">
+                                <tr>
+                                    <th style="padding: 10px; text-align: left;">Товар</th>
+                                    <th style="padding: 10px; text-align: center;">Кол-во</th>
+                                    <th style="padding: 10px; text-align: right;">Цена</th>
+                                    <th style="padding: 10px; text-align: right;">Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${itemsHtml}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #FFF0F5, white); padding: 20px; border-radius: 10px; border: 2px solid #FF69B4;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h4 style="color: #8B008B; margin: 0;">💰 Итого к оплате:</h4>
+                            <h3 style="color: #C71585; margin: 0; font-size: 1.8rem;">
+                                ${order.total ? order.total.toFixed(2) : '0.00'} ₽
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" 
+                                style="padding: 12px 35px; background: #8B008B; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                            ✅ Закрыть
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        // Обновление статуса заказа
+        function updateOrderStatus(orderId, newStatus) {
+            console.log('🔄 Обновляем статус заказа #' + orderId + ' на ' + newStatus);
+            
+            const users = auth.getUsers();
+            let updated = false;
+            
+            // Ищем заказ и обновляем статус
+            users.forEach(user => {
+                if (user.orders) {
+                    const orderIndex = user.orders.findIndex(o => o.id === orderId);
+                    if (orderIndex !== -1) {
+                        user.orders[orderIndex].status = newStatus;
+                        updated = true;
+                    }
                 }
             });
-        });
-    });
-</script>
+            
+            if (updated) {
+                // Сохраняем изменения
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Обновляем отображение
+                const statusCell = event.target.closest('td');
+                const statusSpan = statusCell.querySelector('.status');
+                
+                statusSpan.textContent = getStatusText(newStatus);
+                statusSpan.className = 'status ' + getStatusClass(newStatus);
+                
+                alert(`✅ Статус заказа #${orderId} обновлен на "${getStatusText(newStatus)}"`);
+            } else {
+                alert('❌ Ошибка: заказ не найден');
+            }
+        }
+        
+        // Экспорт данных
+        function exportData() {
+            alert('📥 Экспорт данных в разработке...');
+            // Здесь можно добавить экспорт в CSV/Excel
+        }
+        
+        // Делаем функции доступными глобально
+        window.viewCustomerOrders = viewCustomerOrders;
+        window.viewOrderDetails = viewOrderDetails;
+        window.updateOrderStatus = updateOrderStatus;
+        window.exportData = exportData;
+        
+        console.log('✅ Админ-панель готова к работе');
+    </script>
 </body>
 </html>
-
-
-
-
