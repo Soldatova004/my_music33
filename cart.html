@@ -4,83 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина - Vinyl Store</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* СТИЛИ ДЛЯ КОРЗИНЫ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #FFF0F5;
+            min-height: 100vh;
+        }
+        
+        /* ШАПКА */
+        .navbar {
+            background: linear-gradient(135deg, #8B008B, #FF69B4);
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* КОНТЕЙНЕР КОРЗИНЫ */
+        .cart-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(139, 0, 139, 0.1);
+        }
+        
+        .cart-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #FF69B4;
+        }
+        
+        .cart-header h2 {
+            color: #8B008B;
+            font-size: 2rem;
+        }
+        
+        /* ИТОГОВАЯ СУММА */
+        .cart-summary {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 3px solid #FF69B4;
+            text-align: right;
+        }
+        
+        .cart-summary p {
+            font-size: 1.5rem;
+            color: #8B008B;
+            margin-bottom: 1rem;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(135deg, #8B008B, #FF69B4);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* ПУСТАЯ КОРЗИНА */
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .empty-cart-icon {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+        
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .cart-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- ШАПКА -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <h1><i class="fas fa-record-vinyl"></i> Vinyl Store</h1>
+                <h1>🎵 Vinyl Store</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="cart.html" id="cart-link"><i class="fas fa-shopping-cart"></i> Корзина (<span id="cart-count">0</span>)</a></li>
-                <li><a href="login.html" id="auth-link"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+                <li><a href="index.html">🏠 Главная</a></li>
+                <li><a href="catalog.html">📋 Каталог</a></li>
+                <li><a href="cart.html" id="cart-link">🛒 Корзина (<span id="cart-count">0</span>)</a></li>
+                <li><a href="login.html" id="auth-link">🔐 Войти</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- КОРЗИНА -->
     <main>
         <div class="cart-container">
-            <h2><i class="fas fa-shopping-cart"></i> Ваша корзина</h2>
-            <div id="cart-items">
-                <!-- Корзина загружается через JS -->
+            <div class="cart-header">
+                <h2>🛒 Ваша корзина</h2>
+                <p>Товары, которые вы выбрали</p>
             </div>
+            
+            <!-- ТОВАРЫ В КОРЗИНЕ -->
+            <div id="cart-items">
+                <!-- Товары загрузятся через JS -->
+                <div style="text-align: center; padding: 2rem; color: #666;">
+                    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
+                    <p style="margin-top: 20px;">Загрузка корзины...</p>
+                </div>
+            </div>
+            
+            <!-- ИТОГО -->
             <div class="cart-summary">
-                <p>Итого: <span id="cart-total">0</span> руб.</p>
-                <button onclick="checkout()" class="checkout-btn">Оформить заказ</button>
+                <p>Итого: <span id="cart-total">0.00</span> ₽</p>
+                <button class="checkout-btn" onclick="checkout()">
+                    💳 Оформить заказ
+                </button>
             </div>
         </div>
     </main>
 
+    <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
     <script src="auth.js"></script>
     <script src="cart.js"></script>
-    <script src="main.js"></script>
-    <script src="optimize.js"></script>
-    <!-- Индикатор загрузки -->
-<div id="global-loader" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="text-align: center;">
-        <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-        <p style="margin-top: 20px; color: #8B008B; font-weight: bold;">Загрузка...</p>
-    </div>
-</div>
-
-<style>
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-</style>
-
-<script>
-    // Показывать индикатор при действиях
-    document.addEventListener('DOMContentLoaded', function() {
-        // Показываем на 1 секунду при загрузке
-        const loader = document.getElementById('global-loader');
-        loader.style.display = 'flex';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 1000);
+    
+    <script>
+        // Анимация загрузки
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
         
-        // Вешаем на все кнопки
-        document.querySelectorAll('button, a').forEach(el => {
-            el.addEventListener('click', function() {
-                if(this.tagName === 'A' || this.type === 'submit') {
-                    loader.style.display = 'flex';
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 1500);
+        // Проверка загрузки
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🛒 Страница корзины загружена');
+            
+            // Проверяем авторизацию
+            if (window.auth && auth.currentUser) {
+                console.log('👤 Пользователь авторизован:', auth.currentUser.name);
+            }
+            
+            // Запускаем рендеринг корзины
+            setTimeout(() => {
+                if (window.cart && cart.renderCart) {
+                    console.log('🎯 Запускаем рендеринг корзины...');
+                    cart.renderCart();
+                } else {
+                    console.error('❌ Корзина не загрузилась!');
                 }
-            });
+            }, 200);
         });
-    });
-</script>
+        
+        // Функция оформления заказа
+        window.checkout = function() {
+            console.log('💰 Нажата кнопка оформления заказа');
+            
+            if (window.cart && cart.checkout) {
+                cart.checkout();
+            } else {
+                alert('❌ Корзина не загрузилась. Обновите страницу.');
+            }
+        };
+    </script>
 </body>
-
 </html>
-
-
