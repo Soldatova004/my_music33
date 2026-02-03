@@ -4,35 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vinyl Store - Магазин виниловых пластинок</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Локальные стили для этой страницы */
+        /* Те же стили что и в catalog.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #FFF0F5;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #8B008B, #FF69B4);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
         .hero {
             text-align: center;
             padding: 4rem 2rem;
             background: linear-gradient(135deg, #8B008B, #FF69B4);
             color: white;
-            margin-bottom: 3rem;
-            border-radius: 0 0 20px 20px;
         }
+        
         .hero h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
-        .hero-btn {
-            display: inline-block;
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
             background: white;
-            color: #8B008B;
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(139, 0, 139, 0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .add-to-cart {
+            background: #8B008B;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <!-- ШАПКА САЙТА -->
     <header>
         <nav class="navbar">
             <div class="logo">
@@ -47,46 +111,40 @@
         </nav>
     </header>
 
-    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
     <main>
-        <!-- БАННЕР -->
         <section class="hero">
             <h2>Коллекция виниловых пластинок</h2>
             <p>Классика рока, джаза и современной музыки на виниле</p>
-            <a href="catalog.html" class="hero-btn">👉 Смотреть все пластинки</a>
+            <a href="catalog.html" style="display: inline-block; background: white; color: #8B008B; padding: 1rem 2rem; border-radius: 30px; text-decoration: none; margin-top: 1rem; font-weight: bold;">
+                👉 Смотреть каталог
+            </a>
         </section>
 
-        <!-- КАТАЛОГ ТОВАРОВ -->
-        <section class="products-section">
-            <h2 style="text-align: center; color: #8B008B; margin-bottom: 2rem;">🎧 Популярные пластинки</h2>
-            
-            <!-- КОНТЕЙНЕР ДЛЯ ТОВАРОВ -->
+        <section>
+            <h2 style="text-align: center; padding: 2rem; color: #8B008B;">🎧 Популярные пластинки</h2>
             <div class="products" id="products-container">
-                <!-- ТОВАРЫ БУДУТ ЗАГРУЖЕНЫ ЧЕРЕЗ JavaScript -->
-                <div style="text-align: center; padding: 3rem; color: #666;">
+                <!-- Товары загрузятся через JS -->
+                <div style="text-align: center; padding: 3rem; grid-column: 1 / -1;">
                     <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #8B008B; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-                    <p style="margin-top: 20px;">Загрузка каталога...</p>
+                    <p style="margin-top: 20px; color: #666;">Загрузка товаров...</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ПОДВАЛ -->
-    <footer style="text-align: center; padding: 2rem; background: #8B008B; color: white; margin-top: 3rem;">
-        <p>Vinyl Store &copy; 2024 | Магазин виниловых пластинок</p>
-    </footer>
-
-    <!-- ПОДКЛЮЧЕНИЕ JavaScript -->
     <script src="auth.js"></script>
     <script src="cart.js"></script>
     <script src="main.js"></script>
     
-    <style>
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <script>
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
-
