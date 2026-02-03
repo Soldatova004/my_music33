@@ -50,7 +50,7 @@ const vinylImages = [
         id: 5,
         name: "Amy Winehouse - Back to Black",
         price: 2799,
-        image: "https://images.unsplash.com/photo-1526281216101-ea7f5d8c55d9?w=400&h=400&fit=crop",
+        image: "https://placehold.co/400x400/8B008B/FFFFFF/png?text=VINYL"
         description: "Современная классика соула, посмертный шедевр",
         genre: "Соул, R&B",
         year: 2006,
@@ -174,3 +174,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
